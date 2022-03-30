@@ -1884,14 +1884,14 @@ def RegistrationStaff_Admin(request,id):
        return render(request, 'RegistrationStaff_Admin.html')      
 
 def RegistrationStudent_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id) 
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id) 
        id=id    
-       return render(request, 'RegistrationStudent_Admin.html',{'mem':mem})       
+       return render(request,'RegistrationStudent_Admin.html')       
 
 def RegistrationCurrentStaff_Admin(request):
     #    f 'SAdm_id' in request.session:
@@ -1945,31 +1945,24 @@ def RegistrationCurrentStaffAdmin_update(request,id):
 
 
 def RegistrationCurrentStaffAdmin_updatessave(request,id):
-    if 'SAdm_id' in request.session:
-        if request.session.has_key('SAdm_id'):
-            SAdm_id = request.session['SAdm_id']
-        else:
-            return redirect('/') 
-        SAdm = user_registration.objects.filter(id=SAdm_id) 
+    
     a = user_registration.objects.get(id=id)
     b = payment.objects.get(user_id=id)
     if request.method == 'POST':
-       a.fullname = request.POST['name']
-       a.email = request.POST['email']
-       a.contactnumber = request.POST['mobile']
-       a.status = request.POST['status']
-       a.dateofappointment  =  request.POST['dateofappo']
-       a.employeeid =  request.POST['employeeid'] 
-       BatchId = request.POST['batch'] 
+       a.fullname = request.POST.get('name')
+       a.email = request.POST.get('email')
+       a.mobile = request.POST.get('mobile')
+       a.status = request.POST.get('status')
+       a.dateofappointment  =  request.POST.get('dateofappo')
+       a.staff_id =  request.POST.get('employeeid')
+       BatchId = request.POST.get('batch')
        a.batch_id = BatchId 
-       ClassId = request.POST['class'] 
+       ClassId = request.POST.get('class')
        a.class_registration_id = ClassId
        a.save()
-              
-       b.payment_amount = request.POST['payment']
-       b.save()       
+                    
 
-    return render(request,'RegistrationCurrentStaff_Admin.html')
+    return redirect('RegistrationCurrentStaff_Admin')
 
 
 def RegistrationCurrentStaffAdmin_delete(request,id):
@@ -1979,53 +1972,46 @@ def RegistrationCurrentStaffAdmin_delete(request,id):
     return redirect('RegistrationCurrentStaff_Admin')
 
 def RegistrationResignedStaff_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        des1 = designation.objects.get(designation='staff')
-       RStaff = user_registration.objects.filter(designation_id = des1).filter(status='resigned' or 'Resigned').all().order_by('-id')
+       RStaff = user_registration.objects.filter(designation_id = des1).filter(status='resign' or 'resigned' or 'Resigned').all().order_by('-id')
        batc1 = batch.objects.all()
        class_reg1 = class_registration.objects.all()
-       payment1 = payment_details.objects.all()
-       return render(request, 'RegistrationResignedStaff_Admin.html',{'mem':mem,'des1':des1,'RStaff':RStaff,'batc1':batc1,'class_reg1':class_reg1,'payment1':payment1})  
+       payment1 = payment.objects.all()
+       return render(request, 'RegistrationResignedStaff_Admin.html',{'des1':des1,'RStaff':RStaff,'batc1':batc1,'class_reg1':class_reg1,'payment1':payment1})  
 
 
 def RegistrationResignedStaffAdmin_update(request,id):
-    if 'SAdm_id' in request.session:
-        if request.session.has_key('SAdm_id'):
-            SAdm_id = request.session['SAdm_id']
-        else:
-            return redirect('/') 
-        SAdm = user_registration.objects.filter(id=SAdm_id)
+    # if 'SAdm_id' in request.session:
+    #     if request.session.has_key('SAdm_id'):
+    #         SAdm_id = request.session['SAdm_id']
+    #     else:
+    #         return redirect('/') 
+    #     SAdm = user_registration.objects.filter(id=SAdm_id)
         
         mem1 = user_registration.objects.get(id=id)
-        pay = payment_details.objects.filter(user_id=id)
+        pay = payment.objects.filter(user_id=id)
         bac = batch.objects.all()
         clss = class_registration.objects.all()
         
-        return render(request,'RegistrationResignedStaffAdmin_update.html',{'pay':pay,'mem1':mem1,'clss':clss,'bac':bac,'SAdm':SAdm})
-    else:
-        return redirect('/')
+        return render(request,'RegistrationResignedStaffAdmin_update.html',{'pay':pay,'mem1':mem1,'clss':clss,'bac':bac})
+    
 
 
 
 
 def RegistrationResignedStaffAdmin_updatessave(request,id):
-    if 'SAdm_id' in request.session:
-        if request.session.has_key('SAdm_id'):
-            SAdm_id = request.session['SAdm_id']
-        else:
-            return redirect('/') 
-        SAdm = user_registration.objects.filter(id=SAdm_id)    
+        
     a = user_registration.objects.get(id=id)
-    b = payment_details.objects.get(user_id=id)
     if request.method == 'POST':
        a.fullname = request.POST['name']
        a.email = request.POST['email']
-       a.contactnumber = request.POST['mobile']
+       a.mobile = request.POST['mobile']
        a.status = request.POST['status'] 
        BatchId = request.POST['batch'] 
        a.batch_id = BatchId 
@@ -2033,8 +2019,6 @@ def RegistrationResignedStaffAdmin_updatessave(request,id):
        a.class_registration_id = ClassId
        a.save()
               
-       b.payment_amount = request.POST['payment']
-       b.save()   
 
     return redirect('RegistrationResignedStaff_Admin')
 
@@ -2048,17 +2032,18 @@ def RegistrationResignedStaffAdmin_delete(request,id):
 
 
 def RegistrationCurrentStudent_Admin(request):
-        if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-        else:
-            return redirect('/')
-        mem = user_registration.objects.filter(id=SAdm_id)
+        # if 'SAdm_id' in request.session:
+        #     if request.session.has_key('SAdm_id'):
+        #      SAdm_id = request.session['SAdm_id']
+        # else:
+        #     return redirect('/')
+        # mem = user_registration.objects.filter(id=SAdm_id)
         des = designation.objects.get(designation='student')
         CStudent = user_registration.objects.filter(designation_id = des).filter(status='active' or 'Active').all().order_by('-id')
         batc2 = batch.objects.all()
         class_reg2 = class_registration.objects.all()
-        return render(request, 'RegistrationCurrentStudent_Admin.html',{'mem':mem,'des':des,'CStudent':CStudent,'batc2':batc2,'class_reg2':class_reg2})     
+        paymen = payment.objects.all()
+        return render(request, 'RegistrationCurrentStudent_Admin.html',{'payment':paymen,'des':des,'CStudent':CStudent,'batc2':batc2,'class_reg2':class_reg2})     
 
 def RegistrationCurrentStudent_Adminsave(request,id):
     
@@ -2076,219 +2061,320 @@ def RegistrationCurrentStudent_Adminsave(request,id):
 
 
 def RegistrationPreviousstudent_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        des = designation.objects.get(designation='student')
-       PStudent = user_registration.objects.filter(designation_id = des).filter(status='graduated' or 'Graduated').all().order_by('-id')
+       PStudent = user_registration.objects.filter(designation_id = des).filter(status='resign' or 'resigned').all().order_by('-id')
        batc3 = batch.objects.all()
        class_reg3 = class_registration.objects.all()
-       return render(request, 'RegistrationPreviousstudent_Admin.html',{'mem':mem,'des':des,'PStudent':PStudent,'batc3':batc3,'class_reg3':class_reg3})                              
+       paymen = payment.objects.all()
+       return render(request, 'RegistrationPreviousstudent_Admin.html',{'payment':paymen,'des':des,'PStudent':PStudent,'batc3':batc3,'class_reg3':class_reg3})                              
 
 
+def RegistrationCurrentStudentAdmin_update(request,id):
+    # if 'SAdm_id' in request.session:
+    #     if request.session.has_key('SAdm_id'):
+    #         SAdm_id = request.session['SAdm_id']
+    #     else:
+    #         return redirect('/') 
+    #     SAdm = user_registration.objects.filter(id=SAdm_id)
+        
+        mem1 = user_registration.objects.get(id=id)
+        pay = payment.objects.filter(user_id=id)
+        bac = batch.objects.all()
+        clss = class_registration.objects.all()
+        
+        return render(request,'RegistrationCurrentStudentAdmin_update.html',{'pay':pay,'mem1':mem1,'clss':clss,'bac':bac})
+    # else:
+    #     return redirect('/')
+
+def RegistrationCurrentStudent_updatessave(request,id):
+    # if 'SAdm_id' in request.session:
+    #     if request.session.has_key('SAdm_id'):
+    #         SAdm_id = request.session['SAdm_id']
+    #     else:
+    #         return redirect('/') 
+    #     SAdm = user_registration.objects.filter(id=SAdm_id) 
+    a = user_registration.objects.get(id=id)
+    # b = payment.objects.get(user_id=id)
+    if request.method == 'POST':
+       a.fullname = request.POST.get('name')
+       a.email = request.POST.get('email')
+       a.mobile = request.POST.get('mobile')
+       a.status = request.POST.get('status')
+       a.student_id  =  request.POST.get('studentid')
+       a.joiningdate =  request.POST.get('joiningdate')
+       BatchId = request.POST.get('batch') 
+       a.batch_id = BatchId 
+       ClassId = request.POST.get('class') 
+       a.class_registration_id = ClassId
+       a.save()
+              
+
+    return redirect('RegistrationCurrentStudent_Admin')
+
+
+def RegistrationCurrentStudentAdmin_delete(request,id):
+    
+    
+    m =   user_registration.objects.get(id = id)
+    m.delete()
+    return redirect('RegistrationCurrentStudent_Admin')
+
+
+def RegistrationPreviousstudentAdmin_update(request,id):
+    # if 'SAdm_id' in request.session:
+    #     if request.session.has_key('SAdm_id'):
+    #         SAdm_id = request.session['SAdm_id']
+    #     else:
+    #         return redirect('/') 
+    #     SAdm = user_registration.objects.filter(id=SAdm_id)
+        
+        mem1 = user_registration.objects.get(id=id)
+        pay = payment.objects.filter(user_id=id)
+        bac = batch.objects.all()
+        clss = class_registration.objects.all()
+        
+        return render(request,'RegistrationPreviousstudentAdmin_update.html',{'pay':pay,'mem1':mem1,'clss':clss,'bac':bac})
+    # else:
+    #     return redirect('/')
+
+
+def RegistrationPreviousstudentAdmin_updatessave(request,id):
+    # if 'SAdm_id' in request.session:
+    #     if request.session.has_key('SAdm_id'):
+    #         SAdm_id = request.session['SAdm_id']
+    #     else:
+    #         return redirect('/') 
+    #     SAdm = user_registration.objects.filter(id=SAdm_id) 
+    a = user_registration.objects.get(id=id)
+    # b = payment.objects.get(user_id=id)
+    if request.method == 'POST':
+       a.fullname = request.POST.get('name')
+       a.email = request.POST.get('email')
+       a.mobile = request.POST.get('mobile')
+       a.joiningdate = request.POST.get('joiningdate')
+       a.status = request.POST.get('status')
+       a.student_id  =  request.POST.get('studentid')
+       BatchId = request.POST.get('batch')
+       a.batch_id = BatchId 
+       ClassId = request.POST.get('class')
+       a.class_registration_id = ClassId
+       a.save()
+            
+    return redirect('RegistrationPreviousstudent_Admin')
+
+
+def RegistrationPreviousstudentAdmin_delete(request,id):
+    
+    
+    m =   user_registration.objects.get(id = id)
+    m.delete()
+    return redirect('RegistrationPreviousstudent_Admin')
 
 def Staff_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
-       return render(request, 'Staff_Admin.html',{'mem':mem}) 
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
+       return render(request, 'Staff_Admin.html') 
 
 def StaffCurrentstaff_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        des = designation.objects.get(designation='staff')
        SCurrentstaff = user_registration.objects.filter(designation_id = des).filter(status='active' or 'Active').all().order_by('-id')
-       return render(request, 'StaffCurrentstaff_Admin.html',{'mem':mem,'des':des,'SCurrentstaff':SCurrentstaff}) 
+       return render(request, 'StaffCurrentstaff_Admin.html',{'des':des,'SCurrentstaff':SCurrentstaff}) 
 
 def StaffPreviousstaff_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        des = designation.objects.get(designation='staff')
-       PCurrentstaff = user_registration.objects.filter(designation_id = des).filter(status='resigned' or 'Resgined').all().order_by('-id')
-       return render(request, 'StaffPreviousstaff_Admin.html',{'mem':mem,'des':des,'PCurrentstaff':PCurrentstaff}) 
+       PCurrentstaff = user_registration.objects.filter(designation_id = des).filter(status='resign' or 'Resgined').all().order_by('-id')
+       return render(request, 'StaffPreviousstaff_Admin.html',{'des':des,'PCurrentstaff':PCurrentstaff}) 
 
 def StaffCurrentstaffProfile_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        CStaffProfile = user_registration.objects.get(id = id)
-       return render(request, 'StaffCurrentstaffProfile_Admin.html',{'mem':mem,'CStaffProfile':CStaffProfile}) 
+       return render(request, 'StaffCurrentstaffProfile_Admin.html',{'CStaffProfile':CStaffProfile}) 
 
 def StaffPreviousstaffProfile_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        
        PStaffProfile = user_registration.objects.get(id = id)
-       return render(request, 'StaffPreviousstaffProfile_Admin.html',{'mem':mem,'PStaffProfile':PStaffProfile}) 
+       return render(request, 'StaffPreviousstaffProfile_Admin.html',{'PStaffProfile':PStaffProfile}) 
 
 def StaffCurrentstaffAttendance_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id = id
-       return render(request, 'StaffCurrentstaffAttendance_Admin.html',{'mem':mem,'id':id})  
+       return render(request, 'StaffCurrentstaffAttendance_Admin.html',{'id':id})  
 
 def StaffCurrentstaffAttendanceSort_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id=id
        if request.method == "POST":
             fromdate = request.POST.get('from')
             todate = request.POST.get('to') 
             mem1 = attendance.objects.filter(date__range=[fromdate, todate]).filter(user_id = id)
-       return render(request,'StaffCurrentstaffAttendanceSort_Admin.html',{'mem':mem,'mem1':mem1,'id':id})            
+       return render(request,'StaffCurrentstaffAttendanceSort_Admin.html',{'mem1':mem1,'id':id})            
 
 def StaffPreviousstaffAttendance_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id = id
-       return render(request, 'StaffPreviousstaffAttendance_Admin.html',{'mem':mem,'id':id})  
+       return render(request, 'StaffPreviousstaffAttendance_Admin.html',{'id':id})  
 
 def StaffPreviousstaffAttendanceSort_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id=id
        if request.method == "POST":
             fromdate = request.POST.get('from')
             todate = request.POST.get('to') 
             mem1 = attendance.objects.filter(date__range=[fromdate, todate]).filter(user_id = id)
-       return render(request,'StaffPreviousstaffAttendanceSort_Admin.html',{'mem':mem,'mem1':mem1,'id':id})
+       return render(request,'StaffPreviousstaffAttendanceSort_Admin.html',{'mem1':mem1,'id':id})
 
 
 def Student_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
-       return render(request, 'Student_Admin.html',{'mem':mem}) 
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
+       return render(request, 'Student_Admin.html') 
 
 def StudentCurrentstudent_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        des = designation.objects.get(designation='student')
        SCurrentstudent = user_registration.objects.filter(designation_id = des).filter(status='active' or 'Active')
-       return render(request, 'StudentCurrentstudent_Admin.html',{'mem':mem,'des':des,'SCurrentstudent':SCurrentstudent}) 
+       return render(request, 'StudentCurrentstudent_Admin.html',{'des':des,'SCurrentstudent':SCurrentstudent}) 
 
 def StudentPreviousstudent_Admin(request):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        des = designation.objects.get(designation='student')
-       PCurrentstudent = user_registration.objects.filter(designation_id = des).filter(status='graduated' or 'Graduated')
-       return render(request, 'StudentPreviousstudent_Admin.html',{'mem':mem,'des':des,'PCurrentstudent':PCurrentstudent}) 
+       PCurrentstudent = user_registration.objects.filter(designation_id = des).filter(status='resign' or 'resigned')
+       return render(request, 'StudentPreviousstudent_Admin.html',{'des':des,'PCurrentstudent':PCurrentstudent}) 
 
 def StudentCurrentstudentProfile_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        CStudentProfile = user_registration.objects.get(id = id)
-       return render(request, 'StudentCurrentstudentProfile_Admin.html',{'mem':mem,'CStudentProfile':CStudentProfile})
+       return render(request, 'StudentCurrentstudentProfile_Admin.html',{'CStudentProfile':CStudentProfile})
 
 def StudentPreviousstudentProfile_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        PStudentProfile = user_registration.objects.get(id = id)
-       return render(request, 'StudentPreviousstudentProfile_Admin.html',{'mem':mem,'PStudentProfile':PStudentProfile})
+       return render(request, 'StudentPreviousstudentProfile_Admin.html',{'PStudentProfile':PStudentProfile})
 
 def StudentCurrentstudentAttendance_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id = id
-       return render(request, 'StudentCurrentstudentAttendance_Admin.html',{'mem':mem,'id':id}) 
+       return render(request, 'StudentCurrentstudentAttendance_Admin.html',{'id':id}) 
 
 def StudentCurrentstudentAttendanceSort_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id=id
        if request.method == "POST":
             fromdate = request.POST.get('from')
             todate = request.POST.get('to') 
             mem1 = attendance.objects.filter(date__range=[fromdate, todate]).filter(user_id = id)
-       return render(request,'StudentCurrentstudentAttendanceSort_Admin.html',{'mem':mem,'mem1':mem1,'id':id})
+       return render(request,'StudentCurrentstudentAttendanceSort_Admin.html',{'mem1':mem1,'id':id})
 
 def StudentPreviousstudentAttendance_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id = id
-       return render(request, 'StudentPreviousstudentAttendance_Admin.html',{'mem':mem,'id':id})
+       return render(request, 'StudentPreviousstudentAttendance_Admin.html',{'id':id})
       
 def StudentPreviousstudentAttendanceSort_Admin(request,id):
-       if 'SAdm_id' in request.session:
-            if request.session.has_key('SAdm_id'):
-             SAdm_id = request.session['SAdm_id']
-       else:
-            return redirect('/')
-       mem = user_registration.objects.filter(id=SAdm_id)
+    #    if 'SAdm_id' in request.session:
+    #         if request.session.has_key('SAdm_id'):
+    #          SAdm_id = request.session['SAdm_id']
+    #    else:
+    #         return redirect('/')
+    #    mem = user_registration.objects.filter(id=SAdm_id)
        id=id
        if request.method == "POST":
             fromdate = request.POST.get('from')
             todate = request.POST.get('to') 
             mem1 = attendance.objects.filter(date__range=[fromdate, todate]).filter(user_id = id)
-       return render(request,'StudentPreviousstudentAttendanceSort_Admin.html',{'mem':mem,'mem1':mem1,'id':id})        
+       return render(request,'StudentPreviousstudentAttendanceSort_Admin.html',{'mem1':mem1,'id':id})        
 
 
 

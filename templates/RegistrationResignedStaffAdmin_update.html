@@ -1,4 +1,4 @@
-{% extends 'Index_Admin.html'%} {% load static %} {% block content %}
+{% extends 'Admin_index.html'%} {% load static %} {% block content %}
 <style>
     #myprofile {
         margin-left: 3vh;
@@ -83,7 +83,7 @@
                 <select class="form-control text-light" name="batch" required>
                     <option style="display: none" value="{{mem1.batch.id}}">{{mem1.batch}}</option>
                     {% for i in bac %}
-                    <option value="{{ i.id }}">{{i.batch_name}}</option><br>
+                    <option value="{{ i.id }}">{{i.batch}}</option><br>
                     {% endfor %}
 
                 </select><br>
@@ -96,9 +96,16 @@
 
                 </select><br>
                 <label id="form-label">Status:</label>
-                <input type="text" class="form-control" name="status" autocomplete="off" value="{{mem1.status}}"><br>
-                <label id="form-label">Payment:</label>
-                <input type="text" class="form-control" name="payment" autocomplete="off" value="{{pay.payment_amount}}"><br>
+                <select class="form-control" name="status" required>
+                    <option value="">{{mem1.status}}</option>
+                    
+                    
+                    <option value="active">Active</option>
+                    <option value="resign">Resign</option>
+
+                </select><br>
+                <!-- <label id="form-label">Payment:</label>
+                <input type="text" class="form-control" name="payment" autocomplete="off" value="{{pay.payment_amount}}"><br> -->
                 <button type="submit" style="float: right;" class="btn btn-primary">Submit</button>
             </div>
         </div>

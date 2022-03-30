@@ -1,4 +1,4 @@
-{% extends 'Index_Admin.html' %} {% load static %} {% block content %}
+{% extends 'Admin_index.html' %} {% load static %} {% block content %}
 
 <div class="row ">
     <div class="col-12 grid-margin">
@@ -39,7 +39,7 @@
                                 </td>
                                 <!-- <td> {{ pro.joiningdate|date:"d-m-Y" }} </td> -->
                                 <td> {{i.joiningdate|date:"d-m-Y"}} </td>
-                                <td> {{ i.employee_id }} </td>
+                                <td> {{ i.staff_id }} </td>
 
                             </tr>
                             {% endfor %}

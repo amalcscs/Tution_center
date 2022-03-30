@@ -1,4 +1,4 @@
-{% extends 'Index_Admin.html' %} {% load static %} {% block content %}
+{% extends 'Admin_index.html' %} {% load static %} {% block content %}
 
 <div class="row ">
     <div class="col-12 grid-margin">
@@ -41,7 +41,7 @@
                                 </td>
                                 <td>{{ i.joiningdate|date:"d-m-Y" }} </td>
                                 <td>{{ i.student_id }} </td>
-                                <td> {{ i.batch.batch_name }} </td>
+                                <td> {{ i.batch }} </td>
                                 <td> {{ i.class_registration.class_name }} </td>
 
                             </tr>

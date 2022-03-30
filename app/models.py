@@ -38,6 +38,9 @@ class class_registration(models.Model):
     class_name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.class_name
+
 
 class user_registration(models.Model):
     designation = models.ForeignKey(designation, on_delete=models.DO_NOTHING,
@@ -79,6 +82,8 @@ class user_registration(models.Model):
     creativity = models.IntegerField(default='0')
     workperformance = models.IntegerField(default='0')
     joiningdate = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+    dateofappointment = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     startdate = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)

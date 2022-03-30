@@ -319,6 +319,14 @@ urlpatterns = [
       re_path(r'^AcademicViewBatch_Admin$', views.AcademicViewBatch_Admin, name='AcademicViewBatch_Admin'),
       re_path(r'^AcademicAddBatch_Admindelete/(?P<id>\d+)/$', views.AcademicAddBatch_Admindelete, name='AcademicAddBatch_Admindelete'),
     
+      re_path(r'^RegistrationCurrentStudentAdmin_update/(?P<id>\d+)/$', views.RegistrationCurrentStudentAdmin_update, name='RegistrationCurrentStudentAdmin_update'),
+      re_path(r'^RegistrationCurrentStudent_updatessave/(?P<id>\d+)/$', views.RegistrationCurrentStudent_updatessave, name='RegistrationCurrentStudent_updatessave'),
+      re_path(r'^RegistrationCurrentStudentAdmin_delete/(?P<id>\d+)/$', views.RegistrationCurrentStudentAdmin_delete, name='RegistrationCurrentStudentAdmin_delete'),
+
+      re_path(r'^RegistrationPreviousstudentAdmin_update/(?P<id>\d+)/$', views.RegistrationPreviousstudentAdmin_update, name='RegistrationPreviousstudentAdmin_update'),
+      re_path(r'^RegistrationPreviousstudentAdmin_updatessave/(?P<id>\d+)/$', views.RegistrationPreviousstudentAdmin_updatessave, name='RegistrationPreviousstudentAdmin_updatessave'),
+      re_path(r'^RegistrationPreviousstudentAdmin_delete/(?P<id>\d+)/$', views.RegistrationPreviousstudentAdmin_delete, name='RegistrationPreviousstudentAdmin_delete'),
+
     #***************************Account module***************************
 
     #******************************Subeesh******************************

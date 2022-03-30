@@ -67,7 +67,7 @@
 
 <label id="myprofile">Registration Update</label>
 <hr>
-<form action="{% url 'RegistrationCurrentStaffAdmin_updatessave' mem1.id %}" autocomplete="off" method="post">
+<form action="{% url 'RegistrationPreviousstudentAdmin_updatessave' mem1.id %}" autocomplete="off" method="post">
     {% csrf_token %}
     <div class="container">
         <div class="row">
@@ -79,38 +79,34 @@
                 <input type="text" class="form-control text-light" name="email" autocomplete="off" value="{{mem1.email}}"><br>
                 <label id="form-label">Contact number:</label>
                 <input type="text" class="form-control text-light" name="mobile" autocomplete="off" value="{{mem1.mobile}}"><br>
+                <label id="form-label">Student id:</label>
+                <input type="text" class="form-control" id="datefield" name="studentid" autocomplete="off" value="{{mem1.student_id}}"><br>
+                <label id="form-label">Joining Date:</label>
+                <input type="date" class="form-control" id="datefield"  name="joiningdate" autocomplete="off" value="{{mem1.dateofappointment|date:'Y-m-d'}}"><br>
                 <label id="form-label">Batch:</label>
                 <select class="form-control text-light" name="batch" required>
-                    <option value="{{mem1.batch.id}}">{{mem1.batch}}</option>
+                    <option style="display: none" value="{{mem1.batch.id}}">{{mem1.batch}}</option>
                     {% for i in bac %}
                     <option value="{{ i.id }}">{{i.batch}}</option><br>
                     {% endfor %}
 
                 </select><br>
-
                 <label id="form-label">Class:</label>
                 <select class="form-control text-light" name="class" required>
-                    <option value="{{mem1.class_registration.id}}">{{mem1.class_name}}</option>
+                    <option style="display: none" value="{{mem1.class_registration.id}}">{{mem1.class_registration}}</option>
                     {% for i in clss %}
                     <option value="{{ i.id }}">{{i.class_name}}</option><br>
                     {% endfor %}
 
                 </select><br>
                 <label id="form-label">Status:</label>
-                <select class="form-control" name="status" required>
-                    <option value="">{{mem1.status}}</option>
-                    
-                    
+                <select class="form-control text-light" name="status" required>
+                    <option style="display: none" value="{{mem1.status}}">{{mem1.status}}</option> 
+
                     <option value="active">Active</option>
                     <option value="resign">Resign</option>
-
                 </select><br>
-                <label id="form-label">Date of Appointment:</label>
-                <input type="date" class="form-control" id="datefield" min="{{mem1.dateofappointment}}" name="dateofappo" autocomplete="off" value="{{mem1.dateofappointment|date:'Y-m-d'}}"><br>
-                <label id="form-label">Employee id:</label>
-                <input type="text" class="form-control" name="employeeid" autocomplete="off" value="{{mem1.staff_id}}"><br>
-                <!-- <label id="form-label">Payment:</label>
-                <input type="text" class="form-control" name="payment" autocomplete="off" value="{{pay.payment_amount}}"><br> -->
+               
                 <button type="submit" style="float: right;" class="btn btn-primary">Submit</button>
             </div>
         </div>
