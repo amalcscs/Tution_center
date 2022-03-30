@@ -5,20 +5,38 @@ from django.db import models
 # Create your models here.
 class batch(models.Model):
     batch = models.CharField(max_length=100)
+    description = models.CharField(max_length=100,default='')
     status = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.designation
+        return self.batch
 
 
 class designation(models.Model):
     batch = models.ForeignKey(
-        batch, on_delete=models.DO_NOTHING, related_name='departmentbranch', null=True, blank=True)
+        batch, on_delete=models.DO_NOTHING, related_name='designationbatch', null=True, blank=True)
     designation = models.CharField(max_length=100)
+    files=models.FileField(upload_to = 'images/', null=True, blank=True)
     status = models.CharField(max_length=100)
 
     def __str__(self):
         return self.designation
+
+
+class subject(models.Model):
+    batch = models.ForeignKey(batch,on_delete=models.DO_NOTHING,related_name='batchsubject',null=True,blank=True)
+    subject = models.CharField(max_length=100)
+    Rate = models.CharField(max_length=100,default='')
+    logo = models.FileField(upload_to='images/', null=True, blank=True,default='')
+
+    def __str__(self):
+        return self.subject
+
+
+class class_registration(models.Model):
+    batch = models.ForeignKey(batch,on_delete=models.DO_NOTHING,related_name='batchclass',null=True,blank=True)
+    class_name = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
 
 
 class user_registration(models.Model):
@@ -26,7 +44,9 @@ class user_registration(models.Model):
                                     related_name='userregistrationdesignation', null=True, blank=True)
     batch = models.ForeignKey(batch, on_delete=models.DO_NOTHING,
                                related_name='userregistrationbatch', null=True, blank=True)
-    
+    class_registration= models.ForeignKey(class_registration, on_delete=models.DO_NOTHING,
+                                    related_name='class_registration', null=True, blank=True)
+    subject = models.ForeignKey(subject, on_delete=models.SET_NULL,null=True, blank=True)
     fullname = models.CharField(max_length=240, null=True)
     fathername = models.CharField(max_length=240, null=True)
     mothername = models.CharField(max_length=240, null=True)
@@ -65,7 +85,15 @@ class user_registration(models.Model):
     enddate = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     status = models.CharField(max_length=240, null=True, default='')
-   
+    Std_id = models.IntegerField(default='0',null=True, blank=True)
+    staff_id = models.IntegerField(default='0',null=True, blank=True)
+    total_pay=models.IntegerField(default='0')
+    payment_balance = models.IntegerField( default='0')
+    account_no = models.CharField(max_length=200, null=True, default='')
+    ifsc =  models.CharField(max_length=200, null=True, default='')
+    bank_name = models.CharField(max_length=240, null=True, default='')
+    bank_branch = models.CharField(max_length=240, null=True, default='')
+    payment_status = models.CharField(max_length=200, null=True, default='')
 
     def __str__(self):
         return self.fullname
@@ -94,3 +122,33 @@ class reported_issue(models.Model):
     status = models.CharField(max_length=200)
     def __str__(self):
         return self.reporter
+
+
+class Leave(models.Model):
+    user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
+                             related_name='leaveuser', null=True, blank=True)
+    from_date = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+    to_date = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+    reason = models.TextField()
+    leave_status = models.CharField(max_length=200)
+    status = models.CharField(max_length=200)
+    designation_id = models.CharField(max_length=200)
+    leaveapprovedstatus = models.CharField(max_length=200)
+    leave_rejected_reason = models.CharField(max_length=300)
+
+class progressreport(models.Model):
+    user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,null=True, blank=True)
+    designation = models.ForeignKey(designation, on_delete=models.DO_NOTHING,null=True, blank=True)                        
+    date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
+    subject = models.CharField(max_length=200)
+    mark = models.CharField(max_length=200)
+
+class payment(models.Model):
+    user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,null=True, blank=True)                        
+    date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
+    account_no = models.CharField(max_length=240,null=True,default='')
+    ifsc = models.CharField(max_length=240,null=True,default='')
+    branch = models.CharField(max_length=100,default='')
+    payment = models.CharField(max_length=200)

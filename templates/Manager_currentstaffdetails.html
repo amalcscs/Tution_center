@@ -1,0 +1,102 @@
+{% extends 'Man_index.html' %}
+{% block content %}
+  {% load static %}
+
+  <style>
+      .progress {
+          background-color: #f1f1f1;
+          margin-bottom: 1rem;
+          height: 1rem;
+      }
+  </style>
+  
+  
+  <div class="row">
+      <div class="col-12 grid-margin">
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title">Current Staff</h3>
+                  <div class="form-group">
+                      <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" style="color:white;">
+                  </div>
+                  <div class="table-responsive">
+                      <table class="table" id="myTable">
+                          <thead>
+                             
+                              <tr class="header">
+  
+                                <th> Sl.no </th>
+                                <th>  Name</th>
+                                <th> Email </th>
+                                <th> Staff Id </th>
+                                <th> Address </th>
+                                <th> Phone no </th>
+                               <th> Status </th>
+  
+                              </tr>
+                              
+                          </thead>
+                          <tbody id="myTable">
+                            {% for m in names %}  
+                            {% if forloop.first %} {% endif %}
+                            <tr data-href="{% url 'Manager_staffprofile' m.id %}" style="cursor: pointer;">
+                               
+                              <td>{{ forloop.counter }}</td>
+                              
+                              <td>{{ m.fullname }}</td>
+                              
+                              <td>{{ m.email }}</td>
+                              <td>{{ m.staff_id }}</td>
+                              
+                              <td>{{ m.presentaddress1 }}</td>
+                              
+                              <td>{{ m.mobile }}</td>
+                              
+                              <td><div class="badge badge-outline-success">{{m.status}}</div></td>
+                             
+                          </tr>
+                          {% endfor %}
+                      
+                            
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <script>
+      function myFunction() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[1];
+              if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                      tr[i].style.display = "";
+                  } else {
+                      tr[i].style.display = "none";
+                  }
+              }
+          }
+      }
+  </script>
+  
+  <script>
+  $(document).ready(function(){
+    $('table tr').click(function(){
+      window.location = $(this).data('href');
+      return false;
+      });
+  });
+  </script>
+  
+  {% endblock %}
+
+
+
+

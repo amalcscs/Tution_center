@@ -1,0 +1,183 @@
+{% extends 'Admin_index.html' %} {% load static %} {% block content %}
+<div class="row ">
+    <h3 class="card-title" style="font-size: 20px;font-weight: 600;opacity: 0.9;color: #6c7293;">Manager Leave Request</h3><br><br>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
+        <br>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row" style="margin-top: -16px">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12"><br></div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <form>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" style="color:white;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table" id="myTable">
+                        <thead>
+                            <tr style="color: white">
+                                <th style="color: #6c7293">
+                                    <h4>Sno.</h4>
+                                </th>
+                                <th style="color: #6c7293">
+                                    <h4>From</h4>
+                                </th>
+                                <th style="color: #6c7293">
+                                    <h4>To</h4>
+                                </th>
+                                <th style="color: #6c7293">
+                                    <h4>Leave Type</h4>
+                                </th>
+                                <th style="color: #6c7293; padding-left:20px;">
+                                    <h4>Reason</h4> 
+                                </th>
+                                <th style="color: #6c7293; padding-left:20px;">
+                                    <h4>Status</h4> 
+                                </th>
+                                <!-- <th style="color: #6c7293; padding-left:30px;">
+                                    <h4>Status</h4> 
+                                </th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for i in var %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                            
+                                <td>{{i.from_date|date:"d-m-Y"}}</td>
+                                <td>{{i.to_date|date:"d-m-Y"}}</td>
+                                <td>{{i.leave_status}}</td>
+                                <td >{{i.reason}}</td>
+
+                                    <td> 
+                                        {% if i.leaveapprovedstatus == "" %}
+                                        <a href="">
+                                            <div class="btn btn-outline-danger" data-toggle="modal"
+                                                data-target="#myModal{{i.id}}"></a>
+                                                <i class="mdi mdi-close"></i>&nbsp; Reject
+                                            </div>
+                                            <td>
+                                                <a href="{% url 'Admin_acceptedManager_leave'  i.id%}">
+                                                    <div class="btn btn-outline-success" >
+                                                        <i class="mdi mdi-check"></i>&nbsp; Approve
+                                                    </div>
+                                                </a>                                                                                         
+                                            </td>
+            
+                                            {% elif i.leaveapprovedstatus == "Approved" %}
+                                            <div class="btn btn-outline-success" >
+                                                <i class="mdi mdi-check"></i>&nbsp; {{i.leaveapprovedstatus}}
+                                            </div>
+                                 
+                                            {% else %}
+                                            <div class="btn btn-outline-danger" >
+                                                <i class="mdi mdi-close"></i>&nbsp; {{i.leaveapprovedstatus}}
+                                            </div>
+                                    </td>
+                                   
+                                    {% endif %}
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% for i in var %}
+<div class="modal fade" id="myModal{{i.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Reply</h4>
+        </div>
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    <form action="{% url 'Admin_rejectedManager_leave' i.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row p-3">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center">
+                                        <textarea class="col-12 col-sm-12 col-md-12 col-lg-12 form-control  text-light"
+                                            style="height: 200px; background-color: #2A3038; " name="reply"
+                                            rows="4"> </textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">
+                                    <button type="submit" 
+                                        class="btn btn-outline-primary btn-icon-text ">
+                                        
+                                        SUBMIT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </form>
+    
+                </div>
+
+      </div>
+      
+    </div>
+  </div>
+  
+ 
+  {% endfor %}
+
+
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const rows = document.querySelectorAll("tr[data-href]");
+      rows.forEach(row => {
+        row.addEventListener("click", () => {
+          window.location.href = row.dataset.href;
+        });
+      });
+    });
+
+  </script>
+
+    <!-- modal js -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- end here -->
+
+{% endblock %}

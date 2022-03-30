@@ -1,0 +1,84 @@
+{% extends 'Index_Admin.html' %} {% load static %} {% block content %}
+
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+
+                <h3 class="card-title">Current Student</h3>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" style="color:white;">
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="myTable">
+                        <thead>
+                            <tr class="header" data-href="#">
+                                <th></th>
+                                <th> Name </th>
+                                <th> Email </th>
+                                <th> Joining Date </th>
+                                <th> Student ID </th>
+                                <th> Batch </th>
+                                <th> Class </th>
+                                <!-- <th> Start Date </th>
+                                <th> End Date </th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in SCurrentstudent %}
+                            <tr data-href="{% url 'StudentCurrentstudentProfile_Admin' i.id %}">
+
+                                <td>{{forloop.counter}}</td>
+                                <td>
+                                    <img src="{{ i.photo.url }}" alt="image" />
+                                    <!-- <span class="ps-2">{{ pro.fullname }}</span> -->
+                                    <span class="ps-2">{{ i.fullname }}</span>
+                                </td>
+                                <td>
+                                    {{ i.email }}
+                                </td>
+                                <td> {{ i.joiningdate|date:"d-m-Y" }} </td>
+                                <td>{{ i.student_id }} </td>
+                                <td> {{ i.batch }} </td>
+                                <td> {{ i.class_registration }} </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        $('table tr').click(function() {
+            window.location = $(this).data('href');
+            return false;
+        });
+    });
+</script>
+
+{% endblock %}

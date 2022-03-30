@@ -1,0 +1,77 @@
+{% extends 'Admin_index.html' %} {% load static %} {% block content %}
+
+<style>
+    @media(max-width:61.938em) {
+        .row h3 {
+            font-size: 19px;
+        }
+    }
+</style>
+
+
+<div class="row" style="margin-bottom: 50px;">
+    <h3 class="text-muted">Registration</h3>
+</div>
+<div class="row">
+    {% for Des in Staff %}
+    <div class="col-sm-4 grid-margin">
+        <div class="card">
+            <a href="{% url 'RegistrationStaff_Admin' Des.id %}" style="text-decoration: none; color: #f8f9fa;">
+                <div class="card-body">
+                    <!-- <h5>Revenue</h5> -->
+                    <div class="row">
+                        <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                            <div class="d-flex d-sm-block d-md-flex align-items-center">
+
+                                <h3 class="mb-0">{{ Des.designation }}</h3>
+                                <!-- <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p> -->
+                            </div>
+                            <!-- <h6 class="text-muted font-weight-normal">11.38% Since last month</h6> -->
+                        </div>
+                        <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                            <!-- <i class="icon-lg mdi mdi-account text-primary ms-auto"></i> -->
+                            <img class="col-4 col-sm-12 col-xl-12 " src=" {{Des.files.url}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %} {% for Des1 in Student %}
+    <div class="col-sm-4 grid-margin">
+        <div class="card">
+            <a href="{% url 'RegistrationStudent_Admin' Des1.id %}" style="text-decoration: none; color: #f8f9fa;">
+                <div class="card-body">
+                    <!-- <h5>Revenue</h5> -->
+                    <div class="row">
+                        <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                            <div class="d-flex d-sm-block d-md-flex align-items-center">
+
+                                <h3 class="mb-0">{{ Des1.designation }}</h3>
+                                <!-- <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p> -->
+                            </div>
+                            <!-- <h6 class="text-muted font-weight-normal">11.38% Since last month</h6> -->
+                        </div>
+                        <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                            <!-- <i class="icon-lg mdi mdi-account text-primary ms-auto"></i> -->
+                            <img class="col-4 col-sm-12 col-xl-12 " src=" {{Des1.files.url}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- </div>
+ main-panel ends -->
+<!-- </div> -->
+<!-- page-body-wrapper ends -->
+<!-- </div>
+container-scroller  -->
+<!-- plugins:js -->
+
+
+
+{% endblock %}

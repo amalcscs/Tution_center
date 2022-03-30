@@ -1,0 +1,81 @@
+{% extends 'Man_index.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  #h2{
+    color:#6C7293;
+  }
+  h2{
+    color: white;
+  }
+</style>
+<h2 id="h2">Leave</h2>
+  <div class="row " style="padding-top:20px;">
+    
+    <div class="col-sm-4 grid-margin">
+      <div class="card" style="max-height: 250px">
+      <a href="" style="text-decoration: none;">
+        <div class="card-body">
+          <a href="{% url 'Manager_apply_leave' %}" style="text-decoration: none">
+                
+         <div class="row" style="padding-top:10px;">
+            <div class="col-12 col-sm-12 col-lg-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h3 class="mb-0" style= "color:white;">Apply Leave</h3>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-lg-4 text-center text-xl-right">
+              <i class="icon-lg mdi mdi-archive text-primary ms-auto"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 grid-margin">
+      <div class="card" style="max-height: 250px">
+        <a href="{% url 'Manager_requestleave' %}" style="text-decoration: none">
+                
+        <div class="card-body">
+       <div class="row" style="padding-top:10px;">
+            <div class="col-12 col-sm-12 col-lg-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h3 class="mb-0" style= "color:white;">Requested leave</h3>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-lg-4 text-center text-xl-right">
+              <i class="icon-lg mdi mdi-arrange-send-to-back text-primary ms-auto"></i>
+            </div>
+          </div>
+        </div>
+       </a>
+      </div>
+    </div>
+
+    
+    <div class="col-sm-4 grid-margin">
+      <div class="card" style="max-height: 250px">
+        <a href="{% url 'Manager_staffleave' %}" style="text-decoration: none">
+                
+        <div class="card-body">
+       <div class="row" style="padding-top:10px;">
+            <div class="col-12 col-sm-12 col-lg-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h3 class="mb-0" style= "color:white;">Staff leave</h3>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-lg-4 text-center text-xl-right">
+              
+              <i class="icon-lg mdi mdi-open-in-app"></i>
+            </div>
+          </div>
+        </div>
+       </a>
+      </div>
+    </div>
+
+</div>
+
+{% endblock %}

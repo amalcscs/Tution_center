@@ -1,0 +1,6 @@
+<option selected="true" disabled="disabled" value="">-Not Selected-</option>
+
+
+    {% for user in user %}
+        <option value="{{ user.id }}">{{ user.fullname }}</option>
+    {% endfor %}

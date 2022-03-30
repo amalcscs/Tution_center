@@ -1,0 +1,62 @@
+{%extends 'Admin_index.html'%} {% load static %} {% block content %}
+
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <h2> <small class="text-muted">Update Batch </small></h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+        <div class="card" style="height: 350px;">
+            <div class="card-body">
+                {% for i in var %}
+                <form method="post" action="{% url 'AcademicAddBatchUpdate_Adminsave' i.id %}" enctype="multipart/form-data"> {% csrf_token %} {%endfor%}
+
+
+                    <div class="form-group row">
+                        <label for="exampleInputUsernam2" class="col-sm-3 col-form-label">
+                            Batch
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="batch" style="color:white;" name="batch" required>
+                             <option selected="true" disabled="disabled" value="">{{var1.batch}}</option>
+                             {% for i in batc %}
+                            <option value="{{i.batch}}">{{i.batch}}</option>{%endfor%}
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputUsernam2" class="col-sm-3 col-form-label">
+                        Description
+                    </label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="discrip" id="exampleTextarea1" style="color:white;" rows="8">{{var1.description}}</textarea>
+
+                        </div>
+                        <br>
+                        <br>
+
+                    </div>
+                    <center> {{m}}</center>
+                    <br>
+                    <br>
+                    <br>
+
+                    <div>
+                        <center>
+                            <button type="submit" class="btn btn-outline-success btn-icon-text">SUBMIT</button>
+                            <a href="{% url 'AcademicBatch_Admin' %}" class="btn btn-outline-info"> BACK</a>
+                        </center>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
