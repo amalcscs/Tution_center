@@ -16,7 +16,7 @@ urlpatterns = [
     re_path(r'^Registration/$', views.Registration_form, name='Registration_form'),
 
 #*******************************************Staff module*****************************************************
-    #*********************Amal******************************
+#*******************************************     Amal   *****************************************************
 
     re_path(r'^Staff_logout/$', views.Staff_logout, name='Staff_logout'),
     re_path(r'^Staff_index/$', views.Staff_index, name='Staff_index'),
@@ -34,7 +34,7 @@ urlpatterns = [
     re_path(r'^Staffissuereply/(?P<id>\d+)/$', views.Staffissuereply, name='Staffissuereply'),
 
 
-#**************************Subeesh*************************************
+#*******************************************    Subeesh     ************************************************
 
     re_path(r'^Staff_leave/$', views.Staff_leave, name='Staff_leave'),
     re_path(r'^Staff_Student_det/$', views.Staff_Student_det, name='Staff_Student_det'),
@@ -54,7 +54,7 @@ urlpatterns = [
     re_path(r'^Staff_accepted_leave/(?P<id>\d+)/$', views.Staff_accepted_leave, name='Staff_accepted_leave'),
 
 #********************************************Student module**************************************************
-    #*********************Anwar******************************
+#*******************************************      Anwar    **************************************************
     re_path(r'^Student_logout/$', views.Student_logout, name='Student_logout'),
     re_path(r'^Student_index/$', views.Student_index, name='Student_index'),
     re_path(r'^Student_profiledash/$', views.Student_profiledash, name='Student_profiledash'),
@@ -70,26 +70,26 @@ urlpatterns = [
     re_path(r'^Student_accsettingimagechange/(?P<id>\d+)/$', views.Student_accsettingimagechange, name='Student_accsettingimagechange'),
     re_path(r'^Student_changepwd/$', views.Student_changepwd, name='Student_changepwd'),  
 
-#****************************Subeesh*************************************************
+#*******************************************      Subeesh     *************************************************
 
-    re_path(r'^Student_index$', views.Student_index, name='Student_index'),
+    re_path(r'^Student_index/$', views.Student_index, name='Student_index'),
     re_path(r'^Student_applyleave_cards/$', views.Student_applyleave_cards, name='Student_applyleave_cards'),
     re_path(r'^Student_leavereq/$', views.Student_leavereq, name='Student_leavereq'),
     re_path(r'^Student_reqedleave/$', views.Student_reqedleave, name='Student_reqedleave'),
     re_path(r'^Student_progressreport/$', views.Student_progressreport, name='Student_progressreport'),
 
     
-    #*********************Manager module******************************
-    #*********************Anwar******************************
+#**********************************************Manager module**************************************************
+#**********************************************      Anwar   **************************************************
 
     re_path(r'^Man_index/$', views.Man_index, name='Man_index'),
     re_path(r'^Man_logout/$', views.Man_logout, name='Man_logout'),
-    re_path(r'^Man_attendance$',views.man_page1,name='man_page1'),
-    re_path(r'^Man_attendanceshow$',views.man_page3,name='man_page3'),
+    re_path(r'^Man_attendance/$',views.man_page1,name='man_page1'),
+    re_path(r'^Man_attendanceshow/$',views.man_page3,name='man_page3'),
     re_path(r'^man_desi$',views.man_desi,name='man_desi'),
     re_path(r'^man_emp$',views.man_emp,name='man_emp'),
 
-#*********************Nimisha******************************
+#*********************************************   Nimisha  **************************************************
 
     re_path(r'^MAN_Academic/$', views.MAN_Academic,
             name='MAN_Academic'),
@@ -102,56 +102,56 @@ urlpatterns = [
     re_path(r'^MAN_deleteclass/(?P<id>\d+)/$', views.MAN_deleteclass,
         name='MAN_deleteclass'),
 
-#*********************Meenu************************
+#*********************************************  Meenu  ******************************************************
 
  #------------------staff---------------#
 
-    re_path(r'^Manager_staff$',views.Manager_staff, name="Manager_staff"),  
-    re_path(r'^Manager_currentstaffdetails$',views.Manager_currentstaffdetails, name="Manager_currentstaffdetails"),   
-    re_path(r'^Manager_previousstaffdetails$',views.Manager_previousstaffdetails, name="Manager_previousstaffdetails"), 
-    re_path(r'^Manager_staffprofile/(?P<id>\d+)$',views.Manager_staffprofile, name="Manager_staffprofile"), 
-    re_path(r'^Manager_attendancesearch/(?P<id>\d+)$',views.Manager_attendancesearch, name="Manager_attendancesearch"),   
-    re_path(r'^Manager_attendancesort/(?P<id>\d+)$',views.Manager_attendancesort, name="Manager_attendancesort"),   
+    re_path(r'^Manager_staff/$',views.Manager_staff, name="Manager_staff"),  
+    re_path(r'^Manager_currentstaffdetails/$',views.Manager_currentstaffdetails, name="Manager_currentstaffdetails"),   
+    re_path(r'^Manager_previousstaffdetails/$',views.Manager_previousstaffdetails, name="Manager_previousstaffdetails"), 
+    re_path(r'^Manager_staffprofile/(?P<id>\d+)/$',views.Manager_staffprofile, name="Manager_staffprofile"), 
+    re_path(r'^Manager_attendancesearch/(?P<id>\d+)/$',views.Manager_attendancesearch, name="Manager_attendancesearch"),   
+    re_path(r'^Manager_attendancesort/(?P<id>\d+)/$',views.Manager_attendancesort, name="Manager_attendancesort"),   
 
-    #-------------------student------------#
+#-------------------student------------#
 
-    re_path(r'^Manager_student$',views.Manager_student, name="Manager_student"),
-    re_path(r'^Manager_currentstudentdetails$',views.Manager_currentstudentdetails, name="Manager_currentstudentdetails"),  
-    re_path(r'^Manager_previousstudentdetails$',views.Manager_previousstudentdetails, name="Manager_previousstudentdetails"),  
-    re_path(r'^Manager_studentprofile/(?P<id>\d+)$',views.Manager_studentprofile, name="Manager_studentprofile"),  
-    re_path(r'^Manager_student_attendancesearch/(?P<id>\d+)$',views.Manager_student_attendancesearch, name="Manager_student_attendancesearch"),   
-    re_path(r'^Manager_sort/(?P<id>\d+)$',views.Manager_sort, name="Manager_sort"),   
+    re_path(r'^Manager_student/$',views.Manager_student, name="Manager_student"),
+    re_path(r'^Manager_currentstudentdetails/$',views.Manager_currentstudentdetails, name="Manager_currentstudentdetails"),  
+    re_path(r'^Manager_previousstudentdetails/$',views.Manager_previousstudentdetails, name="Manager_previousstudentdetails"),  
+    re_path(r'^Manager_studentprofile/(?P<id>\d+)/$',views.Manager_studentprofile, name="Manager_studentprofile"),  
+    re_path(r'^Manager_student_attendancesearch/(?P<id>\d+)/$',views.Manager_student_attendancesearch, name="Manager_student_attendancesearch"),   
+    re_path(r'^Manager_sort/(?P<id>\d+)/$',views.Manager_sort, name="Manager_sort"),   
 
-    #--------------Leave Request-------------#
-    re_path(r'^Manager_leaverequest_staff$',views.Manager_leaverequest_staff, name="Manager_leaverequest_staff"),
-    re_path(r'^Manager_apply_leave$',views.Manager_apply_leave, name="Manager_apply_leave"),
-    re_path(r'^Manager_requestleave$',views.Manager_requestleave, name="Manager_requestleave"),
-    re_path(r'^Manager_staffleave$',views.Manager_staffleave, name="Manager_staffleave"),
-    re_path(r'^Manager_rejected_leave/(?P<id>\d+)$',views.Manager_rejected_leave, name="Manager_rejected_leave"),
-    re_path(r'^Manager_accepted_leave/(?P<id>\d+)$',views.Manager_accepted_leave, name="Manager_accepted_leave"),
+#--------------Leave Request-------------#
+    re_path(r'^Manager_leaverequest_staff/$',views.Manager_leaverequest_staff, name="Manager_leaverequest_staff"),
+    re_path(r'^Manager_apply_leave/$',views.Manager_apply_leave, name="Manager_apply_leave"),
+    re_path(r'^Manager_requestleave/$',views.Manager_requestleave, name="Manager_requestleave"),
+    re_path(r'^Manager_staffleave/$',views.Manager_staffleave, name="Manager_staffleave"),
+    re_path(r'^Manager_rejected_leave/(?P<id>\d+)/$',views.Manager_rejected_leave, name="Manager_rejected_leave"),
+    re_path(r'^Manager_accepted_leave/(?P<id>\d+)/$',views.Manager_accepted_leave, name="Manager_accepted_leave"),
 
-    #---------------academics-----------#
-    re_path(r'^Manager_academics$',views.Manager_academics,name="Manager_academics"),
-    re_path(r'^Manager_academics_viewbatch$',views.Manager_academics_viewbatch,name="Manager_academics_viewbatch"),
-    re_path(r'^Manager_academics_delete/(?P<id>\d+)$',views.Manager_academics_delete,name="Manager_academics_delete") , 
-    re_path(r'^Manager_academics_update/(?P<id>\d+)$', views.Manager_academics_update,name='Manager_academics_update'),
-    re_path(r'^Manager_academics_updatesave/(?P<id>\d+)$', views.Manager_academics_updatesave,name='Manager_academics_updatesave'),
+#---------------academics-----------#
+    re_path(r'^Manager_academics/$',views.Manager_academics,name="Manager_academics"),
+    re_path(r'^Manager_academics_viewbatch/$',views.Manager_academics_viewbatch,name="Manager_academics_viewbatch"),
+    re_path(r'^Manager_academics_delete/(?P<id>\d+)/$',views.Manager_academics_delete,name="Manager_academics_delete") , 
+    re_path(r'^Manager_academics_update/(?P<id>\d+)/$', views.Manager_academics_update,name='Manager_academics_update'),
+    re_path(r'^Manager_academics_updatesave/(?P<id>\d+)/$', views.Manager_academics_updatesave,name='Manager_academics_updatesave'),
 
-#*******************************Akhil***************************************
+#******************************************   Akhil   *************************************************
 
-    re_path(r'^MAN_Report$', views.MAN_Report, name='MAN_Report'),
+    re_path(r'^MAN_Report/$', views.MAN_Report, name='MAN_Report'),
     # re_path(r'^MAN_Reportedissue$', views.MAN_Reportedissue, name='MAN_Reportedissue'),
-    re_path(r'^MAN_ReportedissueShow/(?P<id>\d+)$', views.MAN_ReportedissueShow, name='MAN_ReportedissueShow'),
+    re_path(r'^MAN_ReportedissueShow/(?P<id>\d+)/$', views.MAN_ReportedissueShow, name='MAN_ReportedissueShow'),
     re_path(r'^MAN_rep/(?P<id>\d+)/$', views.MAN_rep, name='MAN_rep'),
     re_path(r'^MAN_ReportedissueShow1/(?P<id>\d+)/$',views.MAN_ReportedissueShow1, name='MAN_ReportedissueShow1'),
-    re_path(r'^MAN_manager_report$', views.MAN_manager_report, name='MAN_manager_report'),
-    re_path(r'^MAN_Reportissue$', views.MAN_Reportissue, name='MAN_Reportissue'),
-    re_path(r'^MAN_reportsuccess$', views.MAN_reportsuccess, name='MAN_reportsuccess'),
-    re_path(r'^MAN_manger_reportedissues$', views.MAN_manger_reportedissues, name='MAN_manger_reportedissues'),
+    re_path(r'^MAN_manager_report/$', views.MAN_manager_report, name='MAN_manager_report'),
+    re_path(r'^MAN_Reportissue/$', views.MAN_Reportissue, name='MAN_Reportissue'),
+    re_path(r'^MAN_reportsuccess/$', views.MAN_reportsuccess, name='MAN_reportsuccess'),
+    re_path(r'^MAN_manger_reportedissues/$', views.MAN_manger_reportedissues, name='MAN_manger_reportedissues'),
     re_path(r'^MAN_manger_reportedissues1/(?P<id>\d+)/$', views.MAN_manger_reportedissues1, name='MAN_manger_reportedissues1'),
 
 
-#**********************************Sharon*****************************************
+#*******************************************  Sharon   *****************************************
 
     re_path(r'^MAN_profile/$',views.MAN_profile, name="MAN_profile"),
     re_path(r'^MAN_registration/$',views.MAN_registration, name="MAN_registration"),
@@ -189,18 +189,18 @@ urlpatterns = [
 
     #***********************************anandhu*********************************
 
-    re_path(r'^MAN_AcademicClass$', views.MAN_AcademicClass, name='MAN_AcademicClass'),
-    re_path(r'^MAN_AcademicAddClass$', views.MAN_AcademicAddClass, name='MAN_AcademicAddClass'),
-    re_path(r'^MAN_AcademicAddClasssave$', views.MAN_AcademicAddClasssave, name='MAN_AcademicAddClasssave'),
+    re_path(r'^MAN_AcademicClass/$', views.MAN_AcademicClass, name='MAN_AcademicClass'),
+    re_path(r'^MAN_AcademicAddClass/$', views.MAN_AcademicAddClass, name='MAN_AcademicAddClass'),
+    re_path(r'^MAN_AcademicAddClasssave/$', views.MAN_AcademicAddClasssave, name='MAN_AcademicAddClasssave'),
 
 #*********************Admin module******************************
 
 #************************Akhil***************************
 
-    re_path(r'^Admin_index$', views.Admin_index, name='Admin_index'),
-    re_path(r'^Admin_dashboard$', views.Admin_dashboard, name='Admin_dashboard'),
-    re_path(r'^superadmin_logout$', views.superadmin_logout, name='superadmin_logout'),
-    re_path(r'^superadmin_changepwd$', views.superadmin_changepwd, name='superadmin_changepwd'),
+    re_path(r'^Admin_index/$', views.Admin_index, name='Admin_index'),
+    re_path(r'^Admin_dashboard/$', views.Admin_dashboard, name='Admin_dashboard'),
+    re_path(r'^superadmin_logout/$', views.superadmin_logout, name='superadmin_logout'),
+    re_path(r'^superadmin_changepwd/$', views.superadmin_changepwd, name='superadmin_changepwd'),
 
     #************************Nimisha***************************
 
@@ -274,25 +274,25 @@ urlpatterns = [
                   name='Admin_rejectedManager_leave'),
 
     #************************************Anandhu************************************
-      re_path(r'^Registration_Admin$', views.Registration_Admin, name='Registration_Admin'),
+      re_path(r'^Registration_Admin/$', views.Registration_Admin, name='Registration_Admin'),
       re_path(r'^RegistrationStaff_Admin/(?P<id>\d+)/$', views.RegistrationStaff_Admin, name='RegistrationStaff_Admin'),
       re_path(r'^RegistrationStudent_Admin/(?P<id>\d+)/$', views.RegistrationStudent_Admin, name='RegistrationStudent_Admin'),
-      re_path(r'^RegistrationCurrentStaff_Admin$', views.RegistrationCurrentStaff_Admin, name='RegistrationCurrentStaff_Admin'),
+      re_path(r'^RegistrationCurrentStaff_Admin/$', views.RegistrationCurrentStaff_Admin, name='RegistrationCurrentStaff_Admin'),
       re_path(r'^RegistrationCurrentStaff_Adminsave/(?P<id>\d+)/$', views.RegistrationCurrentStaff_Adminsave, name='RegistrationCurrentStaff_Adminsave'),
       re_path(r'^RegistrationCurrentStaffAdmin_update/(?P<id>\d+)/$', views.RegistrationCurrentStaffAdmin_update, name='RegistrationCurrentStaffAdmin_update'),
       re_path(r'^RegistrationCurrentStaffAdmin_updatessave/(?P<id>\d+)/$', views.RegistrationCurrentStaffAdmin_updatessave, name='RegistrationCurrentStaffAdmin_updatessave'),
       re_path(r'^RegistrationCurrentStaffAdmin_delete/(?P<id>\d+)/$', views.RegistrationCurrentStaffAdmin_delete, name='RegistrationCurrentStaffAdmin_delete'),
       re_path(r'^RegistrationResignedStaffAdmin_update/(?P<id>\d+)/$', views.RegistrationResignedStaffAdmin_update, name='RegistrationResignedStaffAdmin_update'),
       re_path(r'^RegistrationResignedStaffAdmin_updatessave/(?P<id>\d+)/$', views.RegistrationResignedStaffAdmin_updatessave, name='RegistrationResignedStaffAdmin_updatessave'),
-      re_path(r'^RegistrationResignedStaffAdmin_delete$', views.RegistrationResignedStaffAdmin_delete, name='RegistrationResignedStaffAdmin_delete'),
-      re_path(r'^RegistrationResignedStaff_Admin$', views.RegistrationResignedStaff_Admin, name='RegistrationResignedStaff_Admin'),
-      re_path(r'^RegistrationCurrentStudent_Admin$', views.RegistrationCurrentStudent_Admin, name='RegistrationCurrentStudent_Admin'),
+      re_path(r'^RegistrationResignedStaffAdmin_delete/$', views.RegistrationResignedStaffAdmin_delete, name='RegistrationResignedStaffAdmin_delete'),
+      re_path(r'^RegistrationResignedStaff_Admin/$', views.RegistrationResignedStaff_Admin, name='RegistrationResignedStaff_Admin'),
+      re_path(r'^RegistrationCurrentStudent_Admin/$', views.RegistrationCurrentStudent_Admin, name='RegistrationCurrentStudent_Admin'),
       re_path(r'^RegistrationCurrentStudent_Adminsave/(?P<id>\d+)/$', views.RegistrationCurrentStudent_Adminsave, name='RegistrationCurrentStudent_Adminsave'),
-      re_path(r'^RegistrationPreviousstudent_Admin$', views.RegistrationPreviousstudent_Admin, name='RegistrationPreviousstudent_Admin'),
+      re_path(r'^RegistrationPreviousstudent_Admin/$', views.RegistrationPreviousstudent_Admin, name='RegistrationPreviousstudent_Admin'),
 
-      re_path(r'^Staff_Admin$', views.Staff_Admin, name='Staff_Admin'),
-      re_path(r'^StaffCurrentstaff_Admin$', views.StaffCurrentstaff_Admin, name='StaffCurrentstaff_Admin'),
-      re_path(r'^StaffPreviousstaff_Admin$', views.StaffPreviousstaff_Admin, name='StaffPreviousstaff_Admin'),
+      re_path(r'^Staff_Admin/$', views.Staff_Admin, name='Staff_Admin'),
+      re_path(r'^StaffCurrentstaff_Admin/$', views.StaffCurrentstaff_Admin, name='StaffCurrentstaff_Admin'),
+      re_path(r'^StaffPreviousstaff_Admin/$', views.StaffPreviousstaff_Admin, name='StaffPreviousstaff_Admin'),
       re_path(r'^StaffCurrentstaffProfile_Admin/(?P<id>\d+)/$', views.StaffCurrentstaffProfile_Admin, name='StaffCurrentstaffProfile_Admin'),
       re_path(r'^StaffPreviousstaffProfile_Admin/(?P<id>\d+)/$', views.StaffPreviousstaffProfile_Admin, name='StaffPreviousstaffProfile_Admin'),
       re_path(r'^StaffCurrentstaffAttendance_Admin/(?P<id>\d+)/$', views.StaffCurrentstaffAttendance_Admin, name='StaffCurrentstaffAttendance_Admin'),
@@ -300,9 +300,9 @@ urlpatterns = [
       re_path(r'^StaffPreviousstaffAttendance_Admin/(?P<id>\d+)/$', views.StaffPreviousstaffAttendance_Admin, name='StaffPreviousstaffAttendance_Admin'),
       re_path(r'^StaffPreviousstaffAttendanceSort_Admin/(?P<id>\d+)/$', views.StaffPreviousstaffAttendanceSort_Admin, name='StaffPreviousstaffAttendanceSort_Admin'),
     
-      re_path(r'^Student_Admin$', views.Student_Admin, name='Student_Admin'),
-      re_path(r'^StudentCurrentstudent_Admin$', views.StudentCurrentstudent_Admin, name='StudentCurrentstudent_Admin'),
-      re_path(r'^StudentPreviousstudent_Admin$', views.StudentPreviousstudent_Admin, name='StudentPreviousstudent_Admin'),
+      re_path(r'^Student_Admin/$', views.Student_Admin, name='Student_Admin'),
+      re_path(r'^StudentCurrentstudent_Admin/$', views.StudentCurrentstudent_Admin, name='StudentCurrentstudent_Admin'),
+      re_path(r'^StudentPreviousstudent_Admin/$', views.StudentPreviousstudent_Admin, name='StudentPreviousstudent_Admin'),
       re_path(r'^StudentCurrentstudentProfile_Admin/(?P<id>\d+)/$', views.StudentCurrentstudentProfile_Admin, name='StudentCurrentstudentProfile_Admin'),
       re_path(r'^StudentPreviousstudentProfile_Admin/(?P<id>\d+)/$', views.StudentPreviousstudentProfile_Admin, name='StudentPreviousstudentProfile_Admin'),
       re_path(r'^StudentCurrentstudentAttendance_Admin/(?P<id>\d+)/$', views.StudentCurrentstudentAttendance_Admin, name='StudentCurrentstudentAttendance_Admin'),
@@ -310,13 +310,13 @@ urlpatterns = [
       re_path(r'^StudentPreviousstudentAttendance_Admin/(?P<id>\d+)/$', views.StudentPreviousstudentAttendance_Admin, name='StudentPreviousstudentAttendance_Admin'),
       re_path(r'^StudentPreviousstudentAttendanceSort_Admin/(?P<id>\d+)/$', views.StudentPreviousstudentAttendanceSort_Admin, name='StudentPreviousstudentAttendanceSort_Admin'),
 
-      re_path(r'^Academic_Admin$', views.Academic_Admin, name='Academic_Admin'),
-      re_path(r'^AcademicBatch_Admin$', views.AcademicBatch_Admin, name='AcademicBatch_Admin'),
-      re_path(r'^AcademicAddBatch_Admin$', views.AcademicAddBatch_Admin, name='AcademicAddBatch_Admin'),
-      re_path(r'^AcademicAddBatch_Adminsave$', views.AcademicAddBatch_Adminsave, name='AcademicAddBatch_Adminsave'),
+      re_path(r'^Academic_Admin/$', views.Academic_Admin, name='Academic_Admin'),
+      re_path(r'^AcademicBatch_Admin/$', views.AcademicBatch_Admin, name='AcademicBatch_Admin'),
+      re_path(r'^AcademicAddBatch_Admin/$', views.AcademicAddBatch_Admin, name='AcademicAddBatch_Admin'),
+      re_path(r'^AcademicAddBatch_Adminsave/$', views.AcademicAddBatch_Adminsave, name='AcademicAddBatch_Adminsave'),
       re_path(r'^AcademicAddBatchUpdate_Admin/(?P<id>\d+)/$', views.AcademicAddBatchUpdate_Admin, name='AcademicAddBatchUpdate_Admin'),
       re_path(r'^AcademicAddBatchUpdate_Adminsave/(?P<id>\d+)/$', views.AcademicAddBatchUpdate_Adminsave, name='AcademicAddBatchUpdate_Adminsave'),
-      re_path(r'^AcademicViewBatch_Admin$', views.AcademicViewBatch_Admin, name='AcademicViewBatch_Admin'),
+      re_path(r'^AcademicViewBatch_Admin/$', views.AcademicViewBatch_Admin, name='AcademicViewBatch_Admin'),
       re_path(r'^AcademicAddBatch_Admindelete/(?P<id>\d+)/$', views.AcademicAddBatch_Admindelete, name='AcademicAddBatch_Admindelete'),
     
       re_path(r'^RegistrationCurrentStudentAdmin_update/(?P<id>\d+)/$', views.RegistrationCurrentStudentAdmin_update, name='RegistrationCurrentStudentAdmin_update'),
