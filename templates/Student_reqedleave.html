@@ -107,7 +107,9 @@
                   {% elif i.status == "Approved" %}
                   <div class="badge badge-outline-success">Approved</div>
                   {% elif i.status == "Rejected" %}
-                  <div class="badge badge-outline-danger">Rejected</div>
+                  <a href="{% url 'Student_leaverejected' i.id %}">
+                    <div class="badge badge-outline-danger">Rejected</div>
+                  </a>                  
                   {% endif %}
                 </td>
                 <!-- <td>

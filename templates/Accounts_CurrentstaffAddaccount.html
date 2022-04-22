@@ -1,0 +1,69 @@
+{%extends 'Acc_index.html'%} {%load static%} {%block content%}
+<div class="row">
+    <div class="col-12 col-sm-1 col-md-1 col-lg-1"></div>
+    {% for i in var%}
+    <form action="{% url 'Accounts_CurrentStaffAddaccount' i.id %}" method="post">
+        {% csrf_token %}
+        <div class="col-12 col-sm-10 col-md-10 col-lg-12 grid-margin">
+            <div class="card mt-3 mb-5">
+                <div class="card-body">
+                    <div class="card-body" id="personForm">
+                        <div class="row mt-5 ">
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 ">
+                                <div class="form-group row ">
+                                    <label class="col-6 col-sm-6 col-md-6 col-lg-5 col-form-label ">Bank Name</label>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                                        <input type="text" class="form-control text-light " name="bankname" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 "></div>
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 ">
+                                <div class="form-group row ">
+                                    <label class="col-6 col-sm-6 col-md-6 col-lg-5 col-form-label ">Branch Name </label>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                                        <input type="text" class="form-control text-light " name="branchname" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5 ">
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 ">
+                                <div class="form-group row ">
+                                    <label class="col-6 col-sm-6 col-md-6 col-lg-5 col-form-label ">Account Number</label>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                                        <input type="text" class="form-control text-light " name="number" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 "></div>
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 ">
+                                <div class="form-group row ">
+                                    <label class="col-6 col-sm-6 col-md-6 col-lg-5 col-form-label ">IFSC code</label>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                                        <input type="text" class="form-control text-light" name="ifsccode" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4 ">
+                                <center>
+                                    <button type="submit" class="btn btn-primary btn-icon-text " id="btnSearch" style="width: 100px; ">Add </button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+{% endblock %}

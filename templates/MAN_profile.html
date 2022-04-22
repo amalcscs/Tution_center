@@ -138,32 +138,133 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+               
             </div>
         </div>
     </div>
 </div>
 
+<h3 style="padding-left: 7px">Chart</h3>
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-12 col-12 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title" >Pie chart</h4>
-            <canvas id="pieChart" style="height:200px"></canvas>
-          </div>
-        </div>
-      </div>
-    <div class="col-lg-6 col-md-6 col-sm-12 col-12 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title" >Bar chart</h4>
-          <canvas id="barChart" style="height:200px"></canvas>
-        </div>
+  <div class="col-12 col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Pie chart</h4>
+        <canvas id="pie-chart" style="height: 250px"></canvas>
       </div>
     </div>
   </div>
+  <div class="col-12 col-sm-6 col-md-6 col-lg-6  grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Bar chart</h4>
+        <canvas id="chart" style="height: 230px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
   
 
-
-
-{% endblock %}
+    
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../assets/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script src="../../assets/js/settings.js"></script>
+    <script src="../../assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../../assets/js/chart.js"></script>
+    <!-- End custom js for this page -->
+    <script src="/static/assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="/static/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="/static/assets/js/chart.js"></script>
+    
+    
+    <script>
+    
+      var config = {
+        type: 'pie',
+        data: {
+          
+          datasets: [{
+            
+            data: {{ data|safe }},
+            backgroundColor: ['rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)'
+            ],
+          }],
+          
+          labels: ['workperformance','Attitude','Creativity'],
+          
+        },
+        options: {
+          responsive: true
+        }
+      };
+    
+      window.onload = function() {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+      };
+    
+    </script>
+    <script>
+    
+    let ctx = document.getElementById("chart").getContext("2d");
+    let chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+    labels: ['workperformance','Attitude','Creativity'],
+    datasets: [
+    {
+      
+      
+      data: {{ data|safe }},
+      
+      
+      backgroundColor: ['rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)'
+      
+      ],
+      
+    
+    }
+    ]
+    },
+    options: {   
+      legend: {
+      display: false
+      },
+     
+      scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true,
+                  max:100
+            }
+        }]
+    }
+      
+      
+    }
+    
+      
+    
+    
+    });
+    
+    
+    </script>
+    {% endfor %}
+    
+    {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'Admin_index.html' %} {% load static %} {% block content %}
+{% extends 'Acc_index.html' %} {% load static %} {% block content %}
 
 <style>
     @media(max-width:61.938em) {
@@ -9,14 +9,13 @@
 </style>
 
 
-<div class="row" style="margin-bottom: 50px;">
+<div class="row" style="margin-bottom: 30px;">
     <h3 class="text-muted">Staff</h3>
 </div>
 <div class="row">
-
     <div class="col-sm-4 grid-margin">
         <div class="card">
-            <a href="{% url 'RegistrationCurrentStaff_Admin'%}" style="text-decoration: none; color: #f8f9fa;">
+            <a href="{% url 'Accounts_CurrentStaff' %}" style="text-decoration: none; color: #f8f9fa;">
                 <div class="card-body">
                     <!-- <h5>Revenue</h5> -->
                     <div class="row">
@@ -38,7 +37,7 @@
     </div>
     <div class="col-sm-4 grid-margin">
         <div class="card">
-            <a href="{% url 'RegistrationResignedStaff_Admin' %}" style="text-decoration: none; color: #f8f9fa;">
+            <a href="{% url 'Account_staffprevious' %}" style="text-decoration: none; color: #f8f9fa;">
                 <div class="card-body">
                     <!-- <h5>Sales</h5> -->
                     <div class="row">

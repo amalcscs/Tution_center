@@ -37,7 +37,7 @@ table tr[data-href] {
      
       
         <div class="card-body">
-         <form  method="POST" action="Man_attendanceshow" id="personForm" >  
+         <form  method="POST" action="{% url 'man_page3' %}" id="personForm" >  
           {% csrf_token %}
             <div class="">
                  <!-- <label>SELECT FROM DATE</label>  -->
@@ -88,69 +88,72 @@ table tr[data-href] {
     </div>
 
 
-      <script type="text/javascript">
-        $("#Batch").change(function () {
-          const url = $("#personForm").attr("data-cities-url");
-            const deptId = $(this).val();
-            $.ajax({
-                url: 'man_desi',
-                data: {
-                    'dept_id': deptId
-                },
-                success: function (data) {
-                    $("#Desig").html(data);
-                    console.log(data);
-                }
-            });
-    
-        });
-        $("#Desig").change(function () {
-          const url = $("#personForm").attr("data-cities-url");
-          const deptId = $("#Batch").val();
-            const desigId = $("#Desig").val();
-            $.ajax({
-                url: 'man_emp',
-                data: {
-                    'dept_id': deptId  ,
-                    'desig_id': desigId
-                },
-                success: function (data) {
-                    $("#emp").html(data);
-                    console.log(data);
-                }
-            });
+ 
+    <script type="text/javascript">
+      $("#Batch").change(function () {
+        const url = $("#personForm").attr("data-cities-url");
+          const deptId = $(this).val();
+          $.ajax({
+              url: '{% url 'man_desi' %}',
+              data: {
+                  'dept_id': deptId
+              },
+              success: function (data) {
+                  $("#Desig").html(data);
+                  console.log(data);
+              }
           });
-       </script>
+  
+      });
+      $("#Desig").change(function () {
+        const url = $("#personForm").attr("data-cities-url");
+          const deptId = $("#Batch").val();
+          const desigId = $("#Desig").val();
+          $.ajax({
+              url: '{% url 'man_emp' %}' ,
+              data: {
+                  'dept_id': deptId  ,
+                  'desig_id': desigId
+              },
+              success: function (data) {
+                  $("#emp").html(data);
+                  console.log(data);
+              }
+          });
+        });
+     </script>
 
 
 
 
-   
 
-    <script>
-      const targetDiv = document.getElementById("tble");
-      const btn = document.getElementById("btnSearch");
-      btn.onclick = function () {
-        if (targetDiv.style.display = "block") {
-          targetDiv.style.display = "block";
-        } else {
-          targetDiv.style.display !== "none";
-        }
-      };
-    </script>
+
+ 
+
+  <script>
+    const targetDiv = document.getElementById("tble");
+    const btn = document.getElementById("btnSearch");
+    btn.onclick = function () {
+      if (targetDiv.style.display = "block") {
+        targetDiv.style.display = "block";
+      } else {
+        targetDiv.style.display !== "none";
+      }
+    };
+  </script>
 
 
 <script>
-  $(function () {
-    $("#txtFrom").datepicker({
-      minDate: new Date(2022, 2 - 1, 1)
-    });
+$(function () {
+  $("#txtFrom").datepicker({
+    minDate: new Date(2022, 2 - 1, 1)
   });
-  $(function () {
-    $("#txtTo").datepicker({
-      maxDate: new Date(2022, 3 - 1, 1)
-    });
+});
+$(function () {
+  $("#txtTo").datepicker({
+    maxDate: new Date(2022, 3 - 1, 1)
   });
-</script> 
-    </body>
+});
+</script>
+  </body>
 {% endblock %}

@@ -70,13 +70,14 @@ urlpatterns = [
     re_path(r'^Student_accsettingimagechange/(?P<id>\d+)/$', views.Student_accsettingimagechange, name='Student_accsettingimagechange'),
     re_path(r'^Student_changepwd/$', views.Student_changepwd, name='Student_changepwd'),  
 
-#*******************************************      Subeesh     *************************************************
+#*******************************************      Akhil     *************************************************
 
     re_path(r'^Student_index/$', views.Student_index, name='Student_index'),
     re_path(r'^Student_applyleave_cards/$', views.Student_applyleave_cards, name='Student_applyleave_cards'),
     re_path(r'^Student_leavereq/$', views.Student_leavereq, name='Student_leavereq'),
     re_path(r'^Student_reqedleave/$', views.Student_reqedleave, name='Student_reqedleave'),
     re_path(r'^Student_progressreport/$', views.Student_progressreport, name='Student_progressreport'),
+    re_path(r'^Student_leaverejected/(?P<id>\d+)/$', views.Student_leaverejected, name='Student_leaverejected'),
 
     
 #**********************************************Manager module**************************************************
@@ -300,6 +301,18 @@ urlpatterns = [
       re_path(r'^StaffPreviousstaffAttendance_Admin/(?P<id>\d+)/$', views.StaffPreviousstaffAttendance_Admin, name='StaffPreviousstaffAttendance_Admin'),
       re_path(r'^StaffPreviousstaffAttendanceSort_Admin/(?P<id>\d+)/$', views.StaffPreviousstaffAttendanceSort_Admin, name='StaffPreviousstaffAttendanceSort_Admin'),
     
+      re_path(r'^StaffCurrentstaffPerformance_Admin/(?P<id>\d+)/$', views.StaffCurrentstaffPerformance_Admin, name='StaffCurrentstaffPerformance_Admin'),
+      re_path(r'^StaffCurrentstaffPerformance_Adminsave/(?P<id>\d+)/$', views.StaffCurrentstaffPerformance_Adminsave, name='StaffCurrentstaffPerformance_Adminsave'),
+
+      re_path(r'^StaffPreviousstaffPerformance_Admin/(?P<id>\d+)/$', views.StaffPreviousstaffPerformance_Admin, name='StaffPreviousstaffPerformance_Admin'),
+      re_path(r'^StaffPreviousstaffPerformance_Adminsave/(?P<id>\d+)/$', views.StaffPreviousstaffPerformance_Adminsave, name='StaffPreviousstaffPerformance_Adminsave'),
+
+      re_path(r'^StudentCurrentstudentPerformance_Admin/(?P<id>\d+)/$', views.StudentCurrentstudentPerformance_Admin, name='StudentCurrentstudentPerformance_Admin'),
+      re_path(r'^StudentCurrentstudentPerformance_Adminsave/(?P<id>\d+)/$', views.StudentCurrentstudentPerformance_Adminsave, name='StudentCurrentstudentPerformance_Adminsave'),
+
+      re_path(r'^StudentPreviousstudentPerformance_Admin/(?P<id>\d+)/$', views.StudentPreviousstudentPerformance_Admin, name='StudentPreviousstudentPerformance_Admin'),
+      re_path(r'^StudentPreviousstudentPerformance_Adminsave/(?P<id>\d+)/$', views.StudentPreviousstudentPerformance_Adminsave, name='StudentPreviousstudentPerformance_Adminsave'),
+
       re_path(r'^Student_Admin/$', views.Student_Admin, name='Student_Admin'),
       re_path(r'^StudentCurrentstudent_Admin/$', views.StudentCurrentstudent_Admin, name='StudentCurrentstudent_Admin'),
       re_path(r'^StudentPreviousstudent_Admin/$', views.StudentPreviousstudent_Admin, name='StudentPreviousstudent_Admin'),
@@ -332,8 +345,15 @@ urlpatterns = [
     #******************************Subeesh******************************
 
       re_path(r'^Acc_index/$', views.Acc_index, name='Acc_index'),
+      re_path(r'^account_dashboard/$', views.account_dashboard, name='account_dashboard'),
       re_path(r'^Account_Student_det/$', views.Account_Student_det, name='Account_Student_det'),
       re_path(r'^Account_previous_students/$', views.Account_previous_students, name='Account_previous_students'),
+      re_path(r'^account_changepassword/$', views.account_changepassword, name='account_changepassword'),
+      re_path(r'^Acc_current_students/$', views.Acc_current_students, name='Acc_current_students'),
+      re_path(r'^account_accsetting/$', views.account_accsetting, name='account_accsetting'),
+      re_path(r'^account_logout/$', views.account_logout, name='account_logout'),
+      re_path(r'^Acc_current_students_payment/(?P<id>\d+)/$', views.Acc_current_students_payment, name='Acc_current_students_payment'),
+      re_path(r'^account_accsettingimagechange/(?P<id>\d+)/$', views.account_accsettingimagechange, name='account_accsettingimagechange'),
 
       #**********************************sharon***************************
       re_path(r'^account_leaverequest/$',views.account_leaverequest, name="account_leaverequest"),
@@ -343,6 +363,20 @@ urlpatterns = [
       re_path(r'^account_reportedissue/$',views.account_reportedissue, name="account_reportedissue"),
       re_path(r'^account_report_an_issue/$',views.account_report_an_issue, name="account_report_an_issue"),
       re_path(r'^account_issuereply/(?P<id>\d+)/$',views.account_issuereply, name="account_issuereply"),
+
+
+      re_path(r'^Accounts_Staff$', views.Accounts_Staff, name='Accounts_Staff'),
+      re_path(r'^Accounts_CurrentStaff$', views.Accounts_CurrentStaff,name='Accounts_CurrentStaff'),
+      re_path(r'^Accounts_CurrentStaffAddaccount/(?P<id>\d+)$', views.Accounts_CurrentStaffAddaccount,name='Accounts_CurrentStaffAddaccount'),
+      re_path(r'^Accounts_CurrentStaffpayslip$', views.Accounts_CurrentStaffpayslip,name='Accounts_CurrentStaffpayslip'),    
+      re_path(r'^accounts_acntpay$', views.accounts_acntpay, name='accounts_acntpay'),
+      re_path(r'^accounts_paydetails/(?P<id>\d+)/(?P<tid>\d+)/$', views.accounts_paydetails,name='accounts_paydetails'),
+      re_path(r'^accounts_print/(?P<id>\d+)/(?P<tid>\d+)/$', views.accounts_print,name='accounts_print'),
+      re_path(r'^account_payment_details/(?P<id>\d+)$', views.account_payment_details,name='account_payment_details'),
+      re_path(r'^account_payment_salary/(?P<id>\d+)$', views.account_payment_salary,name='account_payment_salary'),
+      re_path(r'^account_payment_view/(?P<id>\d+)$', views.account_payment_view,name='account_payment_view'),
+      re_path(r'^Account_staffprevious/$', views.Account_staffprevious, name='Account_staffprevious'),
+
 
 
 ]

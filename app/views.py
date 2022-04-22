@@ -9,6 +9,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 def login(request):
     manager = designation.objects.get(designation="manager")
@@ -61,7 +62,7 @@ def login(request):
                 request.session['acc_id'] = member.id 
                 acc=user_registration.objects.filter(id= member.id)
                 
-                return render(request,'Acc_index.html',{'acc':acc})
+                return render(request,'account_dashboard.html',{'acc':acc})
     
         else:
             context = {'msg_error': 'Invalid data'}
@@ -255,7 +256,13 @@ def Staff_dashboard(request):
         else:
             return redirect('/')
         mem = user_registration.objects.filter(id=stf_id)
-        return render(request,'Staff_dashboard.html', {'mem': mem})
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=stf_id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            data=[i.workperformance,i.attitude,i.creativity]
+            return render(request,'Staff_dashboard.html', {'labels':labels,'data':data,'mem': mem})
     else:
         return redirect('/')
 
@@ -464,7 +471,15 @@ def Staff_student_dashboard(request,id):
         variable="dummy"
     mem = user_registration.objects.filter(id=stf_id)
     csd=user_registration.objects.filter(id=id)
-    return render(request, 'Staff_student_dashboard.html',{'csd':csd,'mem':mem})
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        
+        
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request, 'Staff_student_dashboard.html',{'labels':labels,'data':data,'csd':csd,'mem':mem})
 
 
 def Staff_previous_students(request):
@@ -570,7 +585,15 @@ def Student_profiledash(request):
     mem1 = user_registration.objects.filter(id=std_id)
 
     student=user_registration.objects.all()
-    return render(request, 'Student_profiledash.html',{'user_registration':student,'mem1':mem1})
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=std_id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        
+        
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request, 'Student_profiledash.html',{'labels':labels,'data':data,'user_registration':student,'mem1':mem1})
 
 def Student_attendance(request):
     if request.session.has_key('std_id'):
@@ -595,6 +618,19 @@ def Student_reportissues(request):
         std_id = request.session['std_id']
     mem1 = user_registration.objects.filter(id=std_id)
     return render(request, 'Student_reportissues.html',{'mem1':mem1})
+
+
+def Student_leaverejected(request,id):
+    if 'std_id' in request.session:
+        if request.session.has_key('std_id'):
+            std_id = request.session['std_id']
+        else:
+            variable="dummy"
+        mem1 = user_registration.objects.filter(id=std_id)
+        var = Leave.objects.get(id=id)
+        return render(request,'Student_leaverejected.html',{'mem1':mem1,'var':var}) 
+    else:
+        return redirect('/')
 
 
 def Studentreportsuccess(request):
@@ -788,7 +824,7 @@ def man_page3(request):
     if request.method == "POST":
         empname1=request.POST.get('empname')
         atten=attendance.objects.filter(user_id=empname1)
-    return render(request,'Man_attendanceshow.html',{'man':man,'atten':atten,'empname1':empname1}) 
+        return render(request,'Man_attendanceshow.html',{'man':man,'atten':atten,'empname1':empname1}) 
 
     
 def man_desi(request):   
@@ -924,7 +960,15 @@ def Manager_staffprofile(request,id):
             variable ="dummy"
         man = user_registration.objects.filter(id=m_id) 
         prodata = user_registration.objects.get(id = id)
-        return render(request,'Manager_staffprofile.html',{'man':man,'prodata':prodata})
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            
+            
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request,'Manager_staffprofile.html',{'labels':labels,'data':data,'man':man,'prodata':prodata})
 
 
 def Manager_attendancesearch(request,id):
@@ -997,7 +1041,15 @@ def Manager_studentprofile(request,id):
             variable ="dummy"
         man = user_registration.objects.filter(id=m_id)
         prodata1 = user_registration.objects.get(id = id)
-        return render(request,'Manager_studentprofile.html',{'man':man,'prodata1':prodata1})
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            
+            
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request,'Manager_studentprofile.html',{'labels':labels,'data':data,'man':man,'prodata1':prodata1})
 
 
 def Manager_student_attendancesearch(request,id):
@@ -1273,7 +1325,15 @@ def MAN_profile(request):
     if request.session.has_key('m_id'):
         m_id = request.session['m_id']
     man = user_registration.objects.filter(id=m_id) 
-    return render(request, 'MAN_profile.html',{'man':man}) 
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=m_id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        
+        
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request, 'MAN_profile.html',{'labels':labels,'data':data,'man':man}) 
 
 def MAN_registration(request):
     if request.session.has_key('m_id'):
@@ -1857,7 +1917,7 @@ def Admin_rejectedManager_leave(request,id):
     if request.method == 'POST':
         staff_reason=request.POST.get('reply')
         pro_sts = Leave.objects.filter(id=id).update(leave_rejected_reason= staff_reason,leaveapprovedstatus ='Rejected')      
-    return redirect('Admin_ManagerLeaveRequest')
+        return redirect('Admin_LeaveRequest')
 
 def Admin_acceptedManager_leave(request,id):
     if request.session.has_key('SAdm_id'):
@@ -2220,7 +2280,13 @@ def StaffCurrentstaffProfile_Admin(request,id):
             return redirect('/')
         Adm = user_registration.objects.filter(id=SAdm_id)
         CStaffProfile = user_registration.objects.get(id = id)
-        return render(request, 'StaffCurrentstaffProfile_Admin.html',{'Adm':Adm,'CStaffProfile':CStaffProfile}) 
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request, 'StaffCurrentstaffProfile_Admin.html',{'labels':labels,'data':data,'Adm':Adm,'CStaffProfile':CStaffProfile}) 
 
 def StaffPreviousstaffProfile_Admin(request,id):
     #    if 'SAdm_id' in request.session:
@@ -2231,7 +2297,39 @@ def StaffPreviousstaffProfile_Admin(request,id):
         Adm = user_registration.objects.filter(id=SAdm_id)
        
         PStaffProfile = user_registration.objects.get(id = id)
-        return render(request, 'StaffPreviousstaffProfile_Admin.html',{'Adm':Adm,'PStaffProfile':PStaffProfile}) 
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request, 'StaffPreviousstaffProfile_Admin.html',{'labels':labels,'data':data,'Adm':Adm,'PStaffProfile':PStaffProfile}) 
+
+def StaffPreviousstaffPerformance_Admin(request,id):
+       if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+       else:
+            return redirect('/')
+       Adm = user_registration.objects.filter(id=SAdm_id)
+       var = user_registration.objects.get(id=id)
+       return render(request,'StaffPreviousstaffPerformance_Admin.html',{'Adm':Adm,'var':var})
+
+def StaffPreviousstaffPerformance_Adminsave(request,id):
+     if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+     else:
+            return redirect('/')          
+     Adm = user_registration.objects.filter(id=SAdm_id)           
+     if request.method == "POST":
+            var = user_registration.objects.get(id=id)
+            var.creativity = request.POST.get('create')
+            var.workperformance = request.POST.get('work')
+            var.attitude = request.POST.get('attitu')
+            var.save()
+            m2 ="Datas added Successfully"
+            return render(request,'StaffPreviousstaffPerformance_Admin.html',{'m2':m2,'Adm':Adm,'var':var})
 
 def StaffCurrentstaffAttendance_Admin(request,id):
     #    if 'SAdm_id' in request.session:
@@ -2256,6 +2354,33 @@ def StaffCurrentstaffAttendanceSort_Admin(request,id):
             todate = request.POST.get('to') 
             mem1 = attendance.objects.filter(date__range=[fromdate, todate]).filter(user_id = id)
         return render(request,'StaffCurrentstaffAttendanceSort_Admin.html',{'Adm':Adm,'mem1':mem1,'id':id})            
+
+def StaffCurrentstaffPerformance_Admin(request,id):
+       if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+       else:
+            return redirect('/')
+       Adm = user_registration.objects.filter(id=SAdm_id)
+       var = user_registration.objects.get(id=id)
+       return render(request,'StaffCurrentstaffPerformance_Admin.html',{'Adm':Adm,'var':var})
+
+
+def StaffCurrentstaffPerformance_Adminsave(request,id):
+     if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+     else:
+            return redirect('/')          
+     Adm = user_registration.objects.filter(id=SAdm_id)           
+     if request.method == "POST":
+            var = user_registration.objects.get(id=id)
+            var.creativity = request.POST.get('create')
+            var.workperformance = request.POST.get('work')
+            var.attitude = request.POST.get('attitu')
+            var.save()
+            m1 ="Datas added Successfully"
+            return render(request,'StaffCurrentstaffPerformance_Admin.html',{'m1':m1,'Adm':Adm,'var':var})
 
 def StaffPreviousstaffAttendance_Admin(request,id):
     #    if 'SAdm_id' in request.session:
@@ -2301,6 +2426,7 @@ def StudentCurrentstudent_Admin(request):
         SCurrentstudent = user_registration.objects.filter(designation_id = des).filter(status='active' or 'Active')
         return render(request, 'StudentCurrentstudent_Admin.html',{'Adm':Adm,'des':des,'SCurrentstudent':SCurrentstudent}) 
 
+
 def StudentPreviousstudent_Admin(request):
     #    if 'SAdm_id' in request.session:
         if request.session.has_key('SAdm_id'):
@@ -2320,7 +2446,13 @@ def StudentCurrentstudentProfile_Admin(request,id):
             return redirect('/')
         Adm = user_registration.objects.filter(id=SAdm_id)
         CStudentProfile = user_registration.objects.get(id = id)
-        return render(request, 'StudentCurrentstudentProfile_Admin.html',{'Adm':Adm,'CStudentProfile':CStudentProfile})
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request, 'StudentCurrentstudentProfile_Admin.html',{'labels':labels,'data':data,'Adm':Adm,'CStudentProfile':CStudentProfile})
 
 def StudentPreviousstudentProfile_Admin(request,id):
     #    if 'SAdm_id' in request.session:
@@ -2330,7 +2462,66 @@ def StudentPreviousstudentProfile_Admin(request,id):
             return redirect('/')
         Adm = user_registration.objects.filter(id=SAdm_id)
         PStudentProfile = user_registration.objects.get(id = id)
-        return render(request, 'StudentPreviousstudentProfile_Admin.html',{'Adm':Adm,'PStudentProfile':PStudentProfile})
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request, 'StudentPreviousstudentProfile_Admin.html',{'labels':labels,'data':data,'Adm':Adm,'PStudentProfile':PStudentProfile})
+
+def StudentCurrentstudentPerformance_Admin(request,id):
+       if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+       else:
+            return redirect('/')
+       Adm = user_registration.objects.filter(id=SAdm_id)
+       var = user_registration.objects.get(id=id)
+       return render(request,'StudentCurrentstudentPerformance_Admin.html',{'Adm':Adm,'var':var})
+
+def StudentPreviousstudentPerformance_Admin(request,id):
+       if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+       else:
+            return redirect('/')
+       mem = user_registration.objects.filter(id=SAdm_id)
+       var = user_registration.objects.get(id=id)
+       return render(request,'StudentPreviousstudentPerformance_Admin.html',{'mem':mem,'var':var})
+
+
+def StudentPreviousstudentPerformance_Adminsave(request,id):
+     if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+     else:
+            return redirect('/')          
+     mem = user_registration.objects.filter(id=SAdm_id)           
+     if request.method == "POST":
+            var = user_registration.objects.get(id=id)
+            var.creativity = request.POST.get('create')
+            var.workperformance = request.POST.get('work')
+            var.attitude = request.POST.get('attitu')
+            var.save()
+            m4 ="Datas added Successfully"
+            return render(request,'StudentPreviousstudentPerformance_Admin.html',{'m4':m4,'mem':mem,'var':var})
+
+def StudentCurrentstudentPerformance_Adminsave(request,id):
+     if 'SAdm_id' in request.session:
+            if request.session.has_key('SAdm_id'):
+             SAdm_id = request.session['SAdm_id']
+     else:
+            return redirect('/')          
+     Adm = user_registration.objects.filter(id=SAdm_id)           
+     if request.method == "POST":
+            var = user_registration.objects.get(id=id)
+            var.creativity = request.POST.get('create')
+            var.workperformance = request.POST.get('work')
+            var.attitude = request.POST.get('attitu')
+            var.save()
+            m3 ="Datas added Successfully"
+            return render(request,'StudentCurrentstudentPerformance_Admin.html',{'m3':m3,'Adm':Adm,'var':var})
 
 def StudentCurrentstudentAttendance_Admin(request,id):
     #    if 'SAdm_id' in request.session:
@@ -2481,8 +2672,29 @@ def AcademicAddBatch_Admindelete(request,id):
 def Acc_index(request):
     return render(request,'Acc_index.html')
 
+def account_dashboard(request):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        
+        acc = user_registration.objects.filter(id=acc_id)
+        labels = []
+        data = []
+        queryset = user_registration.objects.filter(id=acc_id)
+        for i in queryset:
+            labels=[i.workperformance,i.attitude,i.creativity]
+            
+            
+            data=[i.workperformance,i.attitude,i.creativity]
+        return render(request,'account_dashboard.html',{'labels':labels,'data':data,'acc':acc})
+
 def Account_Student_det(request):
-    return render(request, 'Account_Student_det.html')
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        
+        acc = user_registration.objects.filter(id=acc_id)
+        return render(request, 'Account_Student_det.html',{'acc':acc})
 
 def Account_previous_students(request):
     des = designation.objects.get(designation='student')
@@ -2490,10 +2702,76 @@ def Account_previous_students(request):
     pay = payment.objects.all()
     return render(request, 'Account_previous_students.html',{'aps': aps,'pay':pay})
 
+def account_accsetting(request):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        
+        acc = user_registration.objects.filter(id=acc_id)
+        return render(request,'account_accsetting.html', {'acc': acc})
+    else:
+        return redirect('/')
+
+def account_accsettingimagechange(request,id):
+    if 'acc_id' in request.session:
+        
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        
+        acc = user_registration.objects.filter(id=acc_id)
+        if request.method == 'POST':
+            abc = user_registration.objects.get(id=id)
+            abc.photo = request.FILES['filename']
+            abc.save()
+            return redirect('account_accsetting')
+        return render(request, 'account_accsetting.html',{'acc':acc})
+    else:
+        return redirect('/')
+
+def Acc_current_students(request):
+     if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+                acc_id = request.session['acc_id']
+        else:
+            variable = "dummy"
+        acc = user_registration.objects.filter(id=acc_id)
+       
+        des = designation.objects.get(designation='student')
+        acs = user_registration.objects.filter(designation_id=des).filter(status='active') .all().order_by('-id')
+        time = datetime.now()
+        pay = payment.objects.all().order_by('-id')
+     return render(request, 'Acc_current_students.html',{'acc':acc,'acs':acs,'time':time,'pay':pay})
+
+
+def Acc_current_students_payment(request,id):
+     if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+                acc_id = request.session['acc_id']
+        else:
+            variable = "dummy"
+        acc = user_registration.objects.filter(id=acc_id)
+        
+        if request.method == 'POST':
+            payuser=user_registration.objects.get(id=id)
+            pay=payment()
+            pay.date = datetime.now()
+            pay.payment = request.POST['p']
+            pay.user = payuser
+            pay.save()
+            return redirect('Acc_current_students')
+        return render(request,"Acc_current_students.html",{'acc':acc})
+
+
 #************************Sharon****************************************
 
 def account_leaverequest(request):
-    return render(request,"account_leaverequest.html")
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"
+        acc = user_registration.objects.filter(id=acc_id)
+    return render(request,"account_leaverequest.html",{'acc':acc})
 
 def account_applyleave(request):
     if 'acc_id' in request.session:
@@ -2579,3 +2857,201 @@ def account_report_an_issue(request):
         vars.save()
     return render(request,"account_report_an_issue.html",{'acc':acc})
    
+
+def account_changepassword(request):
+    
+    if 'acc_id' in request.session:
+        
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']     
+        acc = user_registration.objects.filter(id=acc_id)   
+          
+        if request.method == 'POST':
+            abc = user_registration.objects.get(id=id)
+            cur = abc.password
+            oldps = request.POST["currentPassword"]
+            newps = request.POST["newPassword"]
+            cmps = request.POST["confirmPassword"]
+            if oldps == cur:
+                if oldps != newps:
+                    if newps == cmps:
+                        abc.password = request.POST.get('confirmPassword')
+                        abc.save()
+                        return render(request, 'account_changepassword.html', {'acc': acc})
+                elif oldps == newps:
+                    messages.add_message(request, messages.INFO, 'Current and New password same')
+                else:
+                    messages.info(request, 'Incorrect password same')
+
+                return render(request, 'account_changepassword.html', {'acc': acc})
+            else:
+                messages.add_message(request, messages.INFO, 'old password wrong')
+                return render(request, 'account_changepassword.html', {'acc': acc})
+        return render(request, 'account_changepassword.html', {'acc': acc})
+                 
+    else:
+        return redirect('/')
+
+
+def account_logout(request):
+    if 'acc_id' in request.session:  
+        request.session.flush()
+        return redirect('/')
+    else:
+        return redirect('/')
+
+
+def Accounts_Staff(request):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    return render(request,'Accounts_Staff.html',{'acc':acc})
+
+def Accounts_CurrentStaff(request): 
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id) 
+    stud_data = designation.objects.get(designation='staff')
+    studname =user_registration.objects.filter(status='active').filter(designation=stud_data)
+    return render(request,'Accounts_CurrentStaff.html',{'var':studname,'acc':acc})
+
+def Accounts_CurrentStaffAddaccount(request,id):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id) 
+    var=user_registration.objects.filter(id=id)
+    if request.method == 'POST':
+        abc = user_registration.objects.get(id=id)
+        abc.bank_name= request.POST.get('bankname')
+        abc.bank_branch = request.POST.get('branchname')
+        abc.account_no = request.POST.get('number')
+        abc.ifsc = request.POST.get('ifsccode')
+        abc.save()
+    return render(request,'Accounts_CurrentStaffAddaccount.html',{'acc':acc,'var':var})
+    
+
+
+def Accounts_CurrentStaffpayslip(request):  
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    b1 = batch.objects.all()
+    des = designation.objects.all()    
+    return render(request,'accounts_payslip.html',{'b1':b1,'des':des,'acc':acc})
+
+
+@csrf_exempt
+def accounts_acntpay(request):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    fdate = request.POST['fdate']
+    tdate = request.POST['tdate']
+    dept_id = int(request.POST['depmt'])
+    desig_id = int(request.POST['desi'])  
+    names = acntspayslip.objects.filter(fromdate_range=(fdate,tdate),designation_id= desig_id, batch_id= dept_id).values('user_id','fullname','eno', 'user_idaccount_no', 'user_idbank_name', 'user_idbank_branch','user_idid', 'user_id_email','id').order_by("-id")
+    print(fdate)
+    print(tdate)
+    print(dept_id)
+    print(desig_id)
+    print(names)
+    return render(request,'accounts_acntpay.html', {'names':names,'acc':acc})
+
+def accounts_paydetails(request,id,tid): 
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)  
+    user = user_registration.objects.get(id=tid)
+    acc1 = acntspayslip.objects.get(id=id)
+    names = acntspayslip.objects.all()
+    return render(request,'accounts_paydetails.html', {'acc':acc1, 'user':user})
+
+
+def accounts_print(request,id,tid):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    user = user_registration.objects.get(id=tid)
+    acc1 = acntspayslip.objects.get(id=id)
+    return render(request,'accounts_print.html', {'acc':acc1, 'user':user})
+
+def account_payment_details(request,id): 
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    vars=user_registration.objects.get(id=id)
+    context = {'vars':vars,'acc':acc}
+    return render(request,'account_payment_details.html', context)
+
+def account_payment_salary(request,id):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    vars=user_registration.objects.get(id=id)
+    if request.method == "POST":
+        abc = acntspayslip()
+        abc.basic_salary = request.POST["salary"]
+        abc.hra = request.POST["hra"]
+        abc.conveyns = request.POST["ca"]
+        abc.pf_tax = request.POST["pt"]
+        abc.incentives = request.POST["ins"]
+        abc.delay = request.POST["delay"]
+        abc.leavesno= request.POST["leave"]
+        abc.fromdate= request.POST["efdate"]
+        abc.tax = 0
+        abc.pf = request.POST["pf"]
+        abc.incometax = 0
+        abc.basictype = request.POST["basictype"]
+        abc.pftype = request.POST["pftype"]
+        abc.esitype = request.POST["esitype"]
+        abc.hratype = request.POST["hratype"]
+        abc.contype = request.POST["contype"]
+        abc.protype = request.POST["protype"]
+        abc.instype = request.POST["instype"]
+        abc.deltype = request.POST["deltype"]
+        abc.leatype = request.POST["leatype"]
+        abc.esi = request.POST["esi"] 
+        abc.user_id_id = vars.id
+        abc.batch_id = vars.batch.id
+        abc.designation_id = vars.designation.id
+        abc.save()
+    return render(request, 'account_payment_salary.html',{'vars':vars,'acc':acc})
+   
+def account_payment_view(request,id):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    reg =user_registration.objects.get(id=id)
+    use=acntspayslip.objects.filter(user_id_id=id)
+    return render(request,'account_payment_view.html',{'reg':reg,'use':use,'acc':acc})
+
+def Account_staffprevious(request):
+    if request.session.has_key('acc_id'):
+        acc_id = request.session['acc_id']
+    else:
+        return redirect('/')
+    acc = user_registration.objects.filter(id=acc_id)
+    staff=designation.objects.get(designation='Staff')
+    user=user_registration.objects.filter(designation=staff)
+    pay=acntspayslip.objects.all()
+    return render(request,'Account_staffprevious.html',{'user_registration':user,'paymentlist':pay,'acc':acc})
