@@ -181,21 +181,7 @@
                                   </select>                  
                 <label>Email </label>
                 <input type="email" class="form-control" name="email" required>
-                <label>Password </label>
-                <input type="password" class="form-control" name="password" id="pass" required>
-                <label>Confirm Password</label>
-                <input type="password" class="form-control" name="conpassword" id="conpassword" required>
-                <span id='message'></span>
                 <br>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-     <script>
- $('#conpassword').on('change', function () {
-  if ($('#pass').val() == $('#conpassword').val()) {
-    $('#message').html('Matching').css('color', 'green');
-  } else 
-    $('#message').html('Not Matching').css('color', 'red');
-});
-    </script>
                 <label id="label1">Present Address</label><br>
                 <label>Address 1 </label>
                 <input type="text" class="form-control" name="address1" id="address1" required>

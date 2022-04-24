@@ -10,6 +10,9 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+from Tution_center.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+
 
 def login(request):
     manager = designation.objects.get(designation="manager")
@@ -74,22 +77,22 @@ def login(request):
 
 def reset_password(request):
     if request.method == "POST":
-        email_id = request.POST.get('email')
-        access_user_data = user_registration.objects.filter(email=email_id).exists()
+        email = request.POST.get('email')
+        access_user_data = user_registration.objects.filter(email=email).exists()
         if access_user_data:
-            _user = user_registration.objects.get(email=email_id)
+            user = user_registration.objects.get(email=email)
             password = random.SystemRandom().randint(100000, 999999)
 
-            _user.password = password
-            # subject = 'iNFOX Technologies your authentication data updated\n'
-            # message = 'Password Reset Successfully\n\nYour login details are below\n\nUsername : ' + str(email) + '\n\nPassword : ' + str(password) + \
-            #     '\n\nYou can login this details'
-            # email_from = settings.EMAIL_HOST_USER
-            # recipient_list = [email_id, ]
-            # send_mail(subject, message, email_from,
-            #           recipient_list, fail_silently=False)
+            user.password = password
 
-            _user.save()
+            user.save()
+            subject = 'Tuition Centre your authentication data updated\n'
+            message = 'Password Reset Successfully\n\nYour login details are below\n\nUsername : ' + str(email) + '\n\nPassword : ' + str(password) + \
+                '\n\nYou can login this details'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email, ]
+            send_mail(subject, message, email_from,
+                      recipient_list, fail_silently=False)
             msg_success = "Password Reset successfully check your mail new password"
             return render(request, 'Reset_password.html', {'msg_success': msg_success})
         else:
@@ -126,6 +129,7 @@ def Registration_form(request):
         a.alternativeno = request.POST['alternative']
         a.batch_id = request.POST['batch']
         a.email = request.POST['email']
+        a.password = random.randint(10000, 99999)
         # a.designation_id = des.id
         # a.password= random.SystemRandom().randint(100000, 999999)
         
@@ -142,24 +146,16 @@ def Registration_form(request):
         email_id=x.email
         x.save()
         y1 = user_registration.objects.get(id=a.id)
-       
+        subject = 'Welcome Tuition Centre'
+        message = 'Congratulations,\n' \
+        'You have successfully registered with our website.\n' \
+        'username :'+str(a.email)+'\n' 'password :'+str(a.password) + \
+        '\n' 'WELCOME '
+        recepient = str(a.email)
+        send_mail(subject, message, EMAIL_HOST_USER,
+                [recepient], fail_silently=False)
+        msg_success = "Registration successfully Check Your Registered Mail"
         
-        # subject = 'Greetings from iNFOX TECHNOLOGIES'
-        # message = 'Congratulations,\n You have successfully registered with iNFOX TECHNOLOGIES.\nfollowing is your login credentials for taking aptitude test\nusername :'+str(email_id)+'\npassword :'+str(passw)+'\n'
-        # email_from = settings.EMAIL_HOST_USER
-        
-        # recipient_list = [email_id, ]
-        # send_mail(subject,message , email_from, [recipient_list], fail_silently=True)
-        msg_success = "Registration successfully"
-        abc = user_registration.objects.get(id=a.id)
-        newps = request.POST["password"]
-        cmps = request.POST["conpassword"]
-        if newps == cmps:
-            abc.password = request.POST.get('conpassword')
-            abc.save()
-        else:
-            msg_error = "password missmatch error"
-            return render(request, 'Registration_form.html',{'msg_error':msg_error})
         return render(request, 'Registration_form.html',{'msg_success': msg_success,'bat':bat})
     return render(request, 'Registration_form.html',{'bat':bat})
 
@@ -2670,7 +2666,11 @@ def AcademicAddBatch_Admindelete(request,id):
 #*************************Subeesh*******************************
 
 def Acc_index(request):
-    return render(request,'Acc_index.html')
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        
+        return render(request,'Acc_index.html')
 
 def account_dashboard(request):
     if 'acc_id' in request.session:
@@ -2902,148 +2902,178 @@ def account_logout(request):
 
 
 def Accounts_Staff(request):
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc= user_registration.objects.filter(id=acc_id)  
+        return render(request,'Accounts_Staff.html',{'acc':acc})
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    return render(request,'Accounts_Staff.html',{'acc':acc})
-
-def Accounts_CurrentStaff(request): 
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
-    else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id) 
-    stud_data = designation.objects.get(designation='staff')
-    studname =user_registration.objects.filter(status='active').filter(designation=stud_data)
-    return render(request,'Accounts_CurrentStaff.html',{'var':studname,'acc':acc})
-
-def Accounts_CurrentStaffAddaccount(request,id):
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
-    else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id) 
-    var=user_registration.objects.filter(id=id)
-    if request.method == 'POST':
-        abc = user_registration.objects.get(id=id)
-        abc.bank_name= request.POST.get('bankname')
-        abc.bank_branch = request.POST.get('branchname')
-        abc.account_no = request.POST.get('number')
-        abc.ifsc = request.POST.get('ifsccode')
-        abc.save()
-    return render(request,'Accounts_CurrentStaffAddaccount.html',{'acc':acc,'var':var})
+        return redirect('/') 
     
-
-
-def Accounts_CurrentStaffpayslip(request):  
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+def Accounts_CurrentStaff(request):  
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id)  
+        stud_data = designation.objects.get(designation='staff')
+        studname =user_registration.objects.filter(status='active').filter(designation=stud_data)
+        return render(request,'Accounts_CurrentStaff.html',{'var':studname,'acc':acc})
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    b1 = batch.objects.all()
-    des = designation.objects.all()    
-    return render(request,'accounts_payslip.html',{'b1':b1,'des':des,'acc':acc})
+        return redirect('/') 
+
+def Accounts_CurrentStaffAddaccount(request,id): 
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id)  
+        var=user_registration.objects.filter(id=id)
+        if request.method == 'POST':
+            abc = user_registration.objects.get(id=id)
+            abc.bank_name= request.POST.get('bankname')
+            abc.bank_branch = request.POST.get('branchname')
+            abc.account_no = request.POST.get('number')
+            abc.ifsc = request.POST.get('ifsccode')
+            abc.save()
+        return render(request,'Accounts_CurrentStaffAddaccount.html',{'var':var,'acc':acc})
+    else:
+        return redirect('/') 
+    
+def Accounts_CurrentStaffpayslip(request):  
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id)  
+        b1 = batch.objects.all()
+        des = designation.objects.all()    
+        return render(request,'accounts_payslip.html',{'b1':b1,'des':des,'acc':acc})
+    else:
+        return redirect('/') 
 
 
 @csrf_exempt
 def accounts_acntpay(request):
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id)  
+        fdate = request.POST['fdate']
+        tdate = request.POST['tdate']
+        dept_id = int(request.POST['depmt'])
+        desig_id = int(request.POST['desi'])  
+        names = acntspayslip.objects.filter(fromdate_range=(fdate,tdate),designation_id= desig_id, batch_id= dept_id).values('user_idfullname','eno', 'user_idaccount_no', 'user_idbank_name', 'user_idbank_branch','user_idid', 'user_id_email','id').order_by("-id")
+        print(fdate)
+        print(tdate)
+        print(dept_id)
+        print(desig_id)
+        print(names)
+        return render(request,'accounts_acntpay.html', {'names':names,'acc':acc})
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    fdate = request.POST['fdate']
-    tdate = request.POST['tdate']
-    dept_id = int(request.POST['depmt'])
-    desig_id = int(request.POST['desi'])  
-    names = acntspayslip.objects.filter(fromdate_range=(fdate,tdate),designation_id= desig_id, batch_id= dept_id).values('user_id','fullname','eno', 'user_idaccount_no', 'user_idbank_name', 'user_idbank_branch','user_idid', 'user_id_email','id').order_by("-id")
-    print(fdate)
-    print(tdate)
-    print(dept_id)
-    print(desig_id)
-    print(names)
-    return render(request,'accounts_acntpay.html', {'names':names,'acc':acc})
+        return redirect('/') 
 
-def accounts_paydetails(request,id,tid): 
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+def accounts_paydetails(request,id,tid):  
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id)   
+        user = user_registration.objects.get(id=tid)
+        acc1 = acntspayslip.objects.get(id=id)
+        names = acntspayslip.objects.all()
+        return render(request,'accounts_paydetails.html', {'acc':acc, 'user':user,'acc1':acc1})
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)  
-    user = user_registration.objects.get(id=tid)
-    acc1 = acntspayslip.objects.get(id=id)
-    names = acntspayslip.objects.all()
-    return render(request,'accounts_paydetails.html', {'acc':acc1, 'user':user})
+        return redirect('/') 
 
 
 def accounts_print(request,id,tid):
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id)
+        user = user_registration.objects.get(id=tid)
+        acc1 = acntspayslip.objects.get(id=id)
+        return render(request,'accounts_print.html', {'acc':acc, 'user':user,'acc1':acc1})
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    user = user_registration.objects.get(id=tid)
-    acc1 = acntspayslip.objects.get(id=id)
-    return render(request,'accounts_print.html', {'acc':acc1, 'user':user})
+        return redirect('/') 
 
-def account_payment_details(request,id): 
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+def account_payment_details(request,id):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id) 
+        vars=user_registration.objects.get(id=id)
+        context = {'vars':vars,'acc':acc}
+        return render(request,'account_payment_details.html', context)
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    vars=user_registration.objects.get(id=id)
-    context = {'vars':vars,'acc':acc}
-    return render(request,'account_payment_details.html', context)
+        return redirect('/')     
 
 def account_payment_salary(request,id):
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id) 
+        vars=user_registration.objects.get(id=id)
+        if request.method == "POST":
+            abc = acntspayslip()
+            abc.basic_salary = request.POST["salary"]
+            abc.hra = request.POST["hra"]
+            abc.conveyns = request.POST["ca"]
+            abc.pf_tax = request.POST["pt"]
+            abc.incentives = request.POST["ins"]
+            abc.delay = request.POST["delay"]
+            abc.leavesno= request.POST["leave"]
+            abc.fromdate= request.POST["efdate"]
+            abc.tax = 0
+            abc.pf = request.POST["pf"]
+            abc.incometax = 0
+            abc.basictype = request.POST["basictype"]
+            abc.pftype = request.POST["pftype"]
+            abc.esitype = request.POST["esitype"]
+            abc.hratype = request.POST["hratype"]
+            abc.contype = request.POST["contype"]
+            abc.protype = request.POST["protype"]
+            abc.instype = request.POST["instype"]
+            abc.deltype = request.POST["deltype"]
+            abc.leatype = request.POST["leatype"]
+            abc.esi = request.POST["esi"] 
+            abc.user_id_id = vars.id
+            abc.batch_id = vars.batch.id
+            abc.designation_id = vars.designation.id
+            abc.save()
+        return render(request, 'account_payment_salary.html',{'vars':vars,'acc':acc})
     else:
-        return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    vars=user_registration.objects.get(id=id)
-    if request.method == "POST":
-        abc = acntspayslip()
-        abc.basic_salary = request.POST["salary"]
-        abc.hra = request.POST["hra"]
-        abc.conveyns = request.POST["ca"]
-        abc.pf_tax = request.POST["pt"]
-        abc.incentives = request.POST["ins"]
-        abc.delay = request.POST["delay"]
-        abc.leavesno= request.POST["leave"]
-        abc.fromdate= request.POST["efdate"]
-        abc.tax = 0
-        abc.pf = request.POST["pf"]
-        abc.incometax = 0
-        abc.basictype = request.POST["basictype"]
-        abc.pftype = request.POST["pftype"]
-        abc.esitype = request.POST["esitype"]
-        abc.hratype = request.POST["hratype"]
-        abc.contype = request.POST["contype"]
-        abc.protype = request.POST["protype"]
-        abc.instype = request.POST["instype"]
-        abc.deltype = request.POST["deltype"]
-        abc.leatype = request.POST["leatype"]
-        abc.esi = request.POST["esi"] 
-        abc.user_id_id = vars.id
-        abc.batch_id = vars.batch.id
-        abc.designation_id = vars.designation.id
-        abc.save()
-    return render(request, 'account_payment_salary.html',{'vars':vars,'acc':acc})
+        return redirect('/')     
    
 def account_payment_view(request,id):
-    if request.session.has_key('acc_id'):
-        acc_id = request.session['acc_id']
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        else:
+            variable="dummy"  
+        acc = user_registration.objects.filter(id=acc_id) 
+        reg =user_registration.objects.get(id=id)
+        use=acntspayslip.objects.filter(user_id_id=id)
+        return render(request,'account_payment_view.html',{'reg':reg,'use':use,'acc':acc})
     else:
         return redirect('/')
-    acc = user_registration.objects.filter(id=acc_id)
-    reg =user_registration.objects.get(id=id)
-    use=acntspayslip.objects.filter(user_id_id=id)
-    return render(request,'account_payment_view.html',{'reg':reg,'use':use,'acc':acc})
+
+
 
 def Account_staffprevious(request):
     if request.session.has_key('acc_id'):

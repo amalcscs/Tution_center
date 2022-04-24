@@ -63,7 +63,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">Employee number</label>
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
-                                            <p class="mt-2 ">{{acc.eno}}</p>
+                                            <p class="mt-2 ">{{acc1.eno}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">Tax engine: </label>
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
-                                            <p class="mt-2 ">{{acc.taxengine}}</p>
+                                            <p class="mt-2 ">{{acc1.taxengine}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">Income tax number: </label>
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
-                                            <p class="mt-2 ">{{acc.incometax}}</p>
+                                            <p class="mt-2 ">{{acc1.incometax}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">Universal account number: </label>
                                         <div class="col-12 col-sm-6 col-md-8 col-lg-8 ">
-                                            <p class="mt-2 ">{{acc.uan}}</p>
+                                            <p class="mt-2 ">{{acc1.uan}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">PF account number: </label>
                                         <div class="col-12 col-sm-6 col-md-8 col-lg-8 ">
-                                            <p class="mt-2 ">{{acc.pf}}</p>
+                                            <p class="mt-2 ">{{acc1.pf}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +142,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">ESI Number </label>
                                         <div class="col-12 col-sm-6 col-md-8 col-lg-8 ">
-                                            <p class="mt-2 ">{{acc.esi}}</p>
+                                            <p class="mt-2 ">{{acc1.esi}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                     <div class="form-group row ">
                                         <label class="col-12 col-sm-6 col-md-4 col-lg-4 col-form-label ">PR account number</label>
                                         <div class="col-12 col-sm-6 col-md-8 col-lg-8 ">
-                                            <p class="mt-2 ">{{acc.pro}}</p>
+                                            <p class="mt-2 ">{{acc1.pro}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -181,44 +181,44 @@
                                         <tr>
                                             <td>Basic salary</td>
                                             <td>
-                                                {% if acc.basictype == 'Earning for Employee' %} {{ acc.basic_salary }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.basictype == 'Earning for Employee' %} {{ acc1.basic_salary }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.basictype == 'Earning for Employee' %} {{ acc.basic_salary }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.basictype == 'Earning for Employee' %} {{ acc1.basic_salary }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.basictype == 'Deduction for Employee' %} {{ acc.basic_salary }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.basictype == 'Deduction for Employee' %} {{ acc1.basic_salary }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.basictype == 'Deduction for Employee' %} {{ acc.basic_salary }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.basictype == 'Deduction for Employee' %} {{ acc1.basic_salary }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>Hra</td>
                                             <td>
-                                                {% if acc.hratype == 'Earning for Employee' %} {{ acc.hra }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.hratype == 'Earning for Employee' %} {{ acc1.hra }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.hratype == 'Earning for Employee' %} {{ acc.hra }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.hratype == 'Earning for Employee' %} {{ acc1.hra }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.hratype == 'Deduction for Employee' %} {{ acc.hra }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.hratype == 'Deduction for Employee' %} {{ acc1.hra }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.hratype == 'Deduction for Employee' %} {{ acc.hra }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.hratype == 'Deduction for Employee' %} {{ acc1.hra }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>Conveyence allowance</td>
-                                            <td>{% if acc.contype == 'Earning for Employee' %} {{ acc.conveyns }} {% else %} 0000.00 {% endif %}</td>
+                                            <td>{% if acc1.contype == 'Earning for Employee' %} {{ acc1.conveyns }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.contype == 'Earning for Employee' %} {{ acc.conveyns }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.contype == 'Earning for Employee' %} {{ acc1.conveyns }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.contype == 'Deduction for Employee' %} {{ acc.conveyns }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.contype == 'Deduction for Employee' %} {{ acc1.conveyns }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.contype == 'Deduction for Employee' %} {{ acc.conveyns }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.contype == 'Deduction for Employee' %} {{ acc1.conveyns }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>Profesional tax</td>
-                                            <td>{% if acc.protype == 'Earning for Employee' %} {{ acc.pf_tax }} {% else %} 0000.00 {% endif %}</td>
+                                            <td>{% if acc1.protype == 'Earning for Employee' %} {{ acc1.pf_tax }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.protype == 'Earning for Employee' %} {{ acc.pf_tax }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.protype == 'Earning for Employee' %} {{ acc1.pf_tax }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.protype == 'Deduction for Employee' %} {{ acc.pf_tax }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.protype == 'Deduction for Employee' %} {{ acc1.pf_tax }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.protype == 'Deduction for Employee' %} {{ acc.pf_tax }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.protype == 'Deduction for Employee' %} {{ acc1.pf_tax }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
 
 
@@ -226,23 +226,23 @@
 
                                         <tr>
                                             <td>PF</td>
-                                            <td>{% if acc.pftype == 'Earning for Employee' %} {{ acc.pf}} {% else %} 0000.00 {% endif %}</td>
+                                            <td>{% if acc1.pftype == 'Earning for Employee' %} {{ acc1.pf}} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.pftype == 'Earning for Employee' %} {{ acc.pf }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.pftype == 'Earning for Employee' %} {{ acc1.pf }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.pftype == 'Deduction for Employee' %} {{ acc.pf }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.pftype == 'Deduction for Employee' %} {{ acc1.pf }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.pftype == 'Deduction for Employee' %} {{ acc.pf }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.pftype == 'Deduction for Employee' %} {{ acc1.pf }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>ESI</td>
-                                            <td>{% if acc.esitype == 'Earning for Employee' %} {{ acc.esi }} {% else %} 0000.00 {% endif %}</td>
+                                            <td>{% if acc1.esitype == 'Earning for Employee' %} {{ acc1.esi }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.esitype == 'Earning for Employee' %} {{ acc.esi }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.esitype == 'Earning for Employee' %} {{ acc1.esi }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.esitype == 'Deduction for Employee' %} {{ acc.esi }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.esitype == 'Deduction for Employee' %} {{ acc1.esi }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.esitype == 'Deduction for Employee' %} {{ acc.esi }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.esitype == 'Deduction for Employee' %} {{ acc1.esi }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
             
             
@@ -251,36 +251,36 @@
 
                                         <tr>
                                             <td>Delay</td>
-                                            <td>{% if acc.deltype == 'Earning for Employee' %} {{ acc.delay }} {% else %} 0000.00 {% endif %}
+                                            <td>{% if acc1.deltype == 'Earning for Employee' %} {{ acc1.delay }} {% else %} 0000.00 {% endif %}
                                             </td>
                                             <td>
-                                                {% if acc.deltype == 'Earning for Employee' %} {{ acc.delay }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.deltype == 'Earning for Employee' %} {{ acc1.delay }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.deltype == 'Deduction for Employee' %} {{ acc.delay }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.deltype == 'Deduction for Employee' %} {{ acc1.delay }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.deltype == 'Deduction for Employee' %} {{ acc.delay }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.deltype == 'Deduction for Employee' %} {{ acc1.delay }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>leave</td>
-                                            <td>{% if acc.leatype == 'Earning for Employee' %} {{ acc.leavesno }} {% else %} 0000.00 {% endif %}
+                                            <td>{% if acc1.leatype == 'Earning for Employee' %} {{ acc1.leavesno }} {% else %} 0000.00 {% endif %}
                                             </td>
                                             <td>
-                                                {% if acc.leatype == 'Earning for Employee' %} {{ acc.leavesno }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.leatype == 'Earning for Employee' %} {{ acc1.leavesno }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.leatype == 'Deduction for Employee' %} {{ acc.leavesno }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.leatype == 'Deduction for Employee' %} {{ acc1.leavesno }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.leatype == 'Deduction for Employee' %} {{ acc.leavesno }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.leatype == 'Deduction for Employee' %} {{ acc1.leavesno }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>Incentives</td>
-                                            <td>{% if acc.instype == 'Earning for Employee' %} {{ acc.incentives }} {% else %} 0000.00 {% endif %}
+                                            <td>{% if acc1.instype == 'Earning for Employee' %} {{ acc1.incentives }} {% else %} 0000.00 {% endif %}
                                             </td>
                                             <td>
-                                                {% if acc.instype == 'Earning for Employee' %} {{ acc.incentives }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.instype == 'Earning for Employee' %} {{ acc1.incentives }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.instype == 'Earning for Employee' %} {{ acc.incentives }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.instype == 'Earning for Employee' %} {{ acc1.incentives }} {% else %} 0000.00 {% endif %}</td>
                                             <td>
-                                                {% if acc.instype == 'Earning for Employee' %} {{ acc.incentives }} {% else %} 0000.00 {% endif %}</td>
+                                                {% if acc1.instype == 'Earning for Employee' %} {{ acc1.incentives }} {% else %} 0000.00 {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <th>Total</th>

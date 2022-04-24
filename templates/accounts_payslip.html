@@ -13,7 +13,7 @@
                                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                                     <select class="badge badge-outline-primary bg-dark text-light " id="depmt" name="dep "><option style="display: none ">Batch</option>
                                         {% for i in b1 %}
-                                        <option value="{{ i.id }}" class="text-light">{{ i.batch }}</option>
+                                        <option value="{{ i.id }}">{{ i.batch }}</option>
                                      {% endfor %}
                                       </select>
                                 </div>
@@ -44,7 +44,7 @@
                             <div class="form-group row ">
                                 <label class="col-6 col-sm-6 col-md-6 col-lg-5 col-form-label ">FROM</label>
                                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
-                                    <input type="Date" class="form-control text-light " name="fdate " id="txtDate">
+                                    <input type="Date" class="form-control text-light " name="start " id="txtDate">
                                 </div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                             <div class="form-group row ">
                                 <label class="col-6 col-sm-6 col-md-6 col-lg-5 col-form-label ">TO</label>
                                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
-                                    <input type="Date" class="form-control text-light" name="tdate " id="txtDate1">
+                                    <input type="Date" class="form-control text-light" name="start " id="txtDate1">
                                 </div>
                             </div>
                         </div>
