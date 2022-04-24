@@ -77,26 +77,27 @@ def login(request):
 
 def reset_password(request):
     if request.method == "POST":
-        email = request.POST.get('email')
-        access_user_data = user_registration.objects.filter(email=email).exists()
+        email_id = request.POST.get('email')
+        access_user_data = user_registration.objects.filter(
+            email=email_id).exists()
         if access_user_data:
-            user = user_registration.objects.get(email=email)
+            _user = user_registration.objects.filter(email=email_id)
             password = random.SystemRandom().randint(100000, 999999)
 
-            user.password = password
-
-            user.save()
-            subject = 'Tuition Centre your authentication data updated\n'
-            message = 'Password Reset Successfully\n\nYour login details are below\n\nUsername : ' + str(email) + '\n\nPassword : ' + str(password) + \
-                '\n\nYou can login this details'
+            _user.password = password
+            subject = 'Tuition Centre your authentication data updated'
+            message = 'Password Reset Successfully\n\nYour login details are below\n\nUsername : ' + str(email_id) + '\n\nPassword : ' + str(password) + \
+                '\n\nYou can login this details\n\nNote: This is a system generated email, do not reply to this email id'
             email_from = settings.EMAIL_HOST_USER
-            recipient_list = [email, ]
+            recipient_list = [email_id, ]
             send_mail(subject, message, email_from,
-                      recipient_list, fail_silently=False)
+                      recipient_list, fail_silently=True)
+
+            _user.save()
             msg_success = "Password Reset successfully check your mail new password"
             return render(request, 'Reset_password.html', {'msg_success': msg_success})
         else:
-            msg_error = "This email does not exist iNFOX Technologies "
+            msg_error = "This email does not exist Tuition Centre "
             return render(request, 'Reset_password.html', {'msg_error': msg_error})
 
     return render(request,'Reset_password.html')
