@@ -1947,7 +1947,66 @@ def RegistrationStaff_Admin(request,id):
             return redirect('/')
         Adm = user_registration.objects.filter(id=SAdm_id)
         id=id
-        return render(request, 'RegistrationStaff_Admin.html',{'Adm':Adm})      
+        return render(request, 'RegistrationStaff_Admin.html',{'Adm':Adm})   
+
+def RegistrationUsers_Admin(request):
+    #    if 'SAdm_id' in request.session:
+        if request.session.has_key('SAdm_id'):
+            SAdm_id = request.session['SAdm_id']
+        else:
+            return redirect('/')
+        Adm = user_registration.objects.filter(id=SAdm_id)
+        alluser = user_registration.objects.all().order_by("-id")
+        batch1 = batch.objects.all()
+        desig = designation.objects.all()
+        return render(request, 'RegistrationUsers_Admin.html',{'batch':batch1,'desig':desig,'Adm':Adm,'alluser':alluser})     
+
+def RegistrationUser_Adminsave(request,id):
+    
+   
+    if request.method == 'POST':
+       a = user_registration.objects.get(id=id)
+   
+       a.status = request.POST['status']
+       a.batch_id = request.POST['batch'] 
+       a.designation_id = request.POST['designation'] 
+       a.save()
+     
+       return redirect('RegistrationUsers_Admin')
+
+def RegistrationAdminUser_delete(request,id):
+    
+    m =   user_registration.objects.get(id = id)
+    m.delete()
+    return redirect('RegistrationUsers_Admin')
+
+def RegistrationAdminUsers_update(request,id):
+    # if 'SAdm_id' in request.session:
+        if request.session.has_key('SAdm_id'):
+            SAdm_id = request.session['SAdm_id']
+        else:
+            return redirect('/')
+        Adm = user_registration.objects.filter(id=SAdm_id)
+        
+        mem1 = user_registration.objects.get(id=id)
+        bac = batch.objects.all()
+        desig = designation.objects.all()
+        
+        return render(request,'RegistrationAdminUsers_update.html',{'Adm':Adm,'desig':desig,'mem1':mem1,'bac':bac})
+ 
+
+def RegistrationAdminUsers_updatessave(request,id):
+    
+    if request.method == 'POST':
+       a = user_registration.objects.get(id=id)
+       a.fullname = request.POST.get('name')
+       a.email = request.POST.get('email')
+       a.mobile = request.POST.get('mobile')
+       a.status = request.POST.get('status')
+       a.batch_id = request.POST.get('batch')
+       a.designation_id = request.POST.get('class')
+       a.save()
+    return redirect('RegistrationUsers_Admin')
 
 def RegistrationStudent_Admin(request,id):
     #    if 'SAdm_id' in request.session:
@@ -2971,7 +3030,7 @@ def accounts_acntpay(request):
         tdate = request.POST['tdate']
         dept_id = int(request.POST['depmt'])
         desig_id = int(request.POST['desi'])  
-        names = acntspayslip.objects.filter(fromdate_range=(fdate,tdate),designation_id= desig_id, batch_id= dept_id).values('user_idfullname','eno', 'user_idaccount_no', 'user_idbank_name', 'user_idbank_branch','user_idid', 'user_id_email','id').order_by("-id")
+        names = acntspayslip.objects.filter(date__range=[fdate, tdate],designation_id= desig_id, batch_id= dept_id).values('user_idfullname','eno', 'user_idaccount_no', 'user_idbank_name', 'user_idbank_branch','user_idid', 'user_id_email','id').order_by("-id")
         print(fdate)
         print(tdate)
         print(dept_id)

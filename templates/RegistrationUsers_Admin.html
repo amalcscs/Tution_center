@@ -1,0 +1,225 @@
+{% extends 'Admin_index.html'%} {% load static %} {% block content %}
+
+<style>
+    .table1 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    th,
+    td {
+        text-align: center;
+    }
+    
+     ::-webkit-scrollbar {
+        width: 10px;
+        height: 5px;
+    }
+    /* Track */
+    
+     ::-webkit-scrollbar-track {
+        background: #191c24;
+    }
+    /* Handle */
+    
+     ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    /* Handle on hover */
+    
+     ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    
+    .card-title {
+        font-size: 20px;
+        font-weight: 900px;
+    }
+</style>
+
+<div class="row">
+    <div class=" col-12 grid-margin table1">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Registration Details</h4>
+                <input type="text" class="form-control text-light" onkeyup="myFunction()" id="search" name="search" autocomplete="off" placeholder="Search...">
+                <br>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <!-- <th>
+                                    <div class="form-check form-check-muted m-0">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input">
+                                        </label>
+                                    </div>
+                                </th> -->
+                                <th> Sl.No </th>
+                                <th> Name </th>
+                                <th> Email </th>
+                                <th> Contact Number </th>
+                                <th> Batch </th>
+                                <th> Designation </th>
+                                <th> Status </th>
+                                <th> Action </th>
+                                <th> Update </th>
+                                <th> Delete </th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            {% for i in alluser %}
+
+                            <tr>
+                                <form method="post" action="{% url 'RegistrationUser_Adminsave' i.id %}" enctype="multipart/form-data">
+                                    {%csrf_token%}
+                                    <input type="hidden" name="id" value="{{i.id}}">
+                                    <td>
+                                        {{forloop.counter}}
+                                    </td>
+                                    <td>
+                                        <img src="{{ i.photo.url }}" alt="image" />
+                                        <span class="ps-2">{{ i.fullname }}</span>
+                                    </td>
+                                    <td>{{ i.email }}</td>
+                                    <td>{{ i.mobile }}</td>
+                                    <td>
+                                        <select class="badge badge-outline-primary bg-dark text-light" name="batch" required>
+                                        <option value="">--select--</option>
+                                        {% for i in batch %}
+                                        
+                                        <option value="{{ i.id }}">{{ i.batch }}</option>
+                                         {% endfor %}
+                                    </select>
+                                    </td>
+                                    <td>
+                                        <select class="badge badge-outline-primary bg-dark text-light" name="designation" required>
+                                        <option value="">--select--</option>
+                                        {% for j in desig %}
+                                        
+                                        <option value="{{ j.id }}">{{ j.designation }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    </td>
+                                    <td>
+                                        <select class="badge badge-outline-primary bg-dark text-light" name="status" required>
+                                        <option value="">--select--</option>
+                                        
+                                        
+                                        <option value="Active">Active</option>
+                                        <option value="Resign">Resign</option>
+                    
+                                    </select>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-outline-primary btn-icon-text">
+                              <i class="mdi mdi-file-check btn-icon-prepend"></i>Submit
+                            
+                            </button>
+                                    </td>
+                                    
+                                    <td>
+                                        <a href="{% url 'RegistrationAdminUsers_update' i.id %}">
+                                            <div class="badge badge-outline-warning">Update</div>
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a id="alert2" href="{% url 'RegistrationAdminUser_delete' i.id %}">
+                                            <div class="badge badge-outline-danger">Delete</div>
+                                        </a>
+
+                                    </td>
+                                </form>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // $(document).on('click', '#alert2', function (e) {
+    //     e.preventDefault();
+    //     const swalWithBootstrapButtons = Swal.mixin({
+    //         customClass: {
+    //             confirmButton: 'btn btn-success',
+    //             cancelButton: 'btn btn-danger'
+    //         },
+    //         buttonsStyling: true
+    //     })
+
+    function popup() {
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger',
+
+
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        })
+    }
+
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    $(document).ready(function() {
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+{% endblock %}

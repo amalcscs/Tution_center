@@ -1,0 +1,136 @@
+{% extends 'Admin_index.html'%} {% load static %} {% block content %}
+<style>
+    #myprofile {
+        margin-left: 3vh;
+        margin-top: 3vh;
+        font-size: 24px;
+        color: gray;
+    }
+    
+    form {
+        margin-left: auto;
+        margin-right: auto;
+        /* min-width: 100px;
+        max-width: 550px;
+        width: 550px; */
+        margin-top: 5vh;
+    }
+    
+    #form-label {
+        color: white
+    }
+    
+    .btn-primary {
+        border-radius: 5px;
+        margin-top: 2vh;
+        height: 50px;
+        width: 200px;
+    }
+    
+    .form-control {
+        color: white !important;
+    }
+    
+    .ui-datepicker table {
+        width: 100%;
+        font-size: .9em;
+        border-collapse: collapse;
+        margin: 0 0 0.4em;
+        background-color: black;
+    }
+    
+     ::-webkit-scrollbar {
+        width: 10px;
+        height: 5px;
+    }
+    /* Track */
+    
+     ::-webkit-scrollbar-track {
+        background: #191c24;
+    }
+    /* Handle */
+    
+     ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    /* Handle on hover */
+    
+     ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    
+    .btn {
+        border: 1px solid #636d87;
+        color: #636d87;
+    }
+</style>
+
+<label id="myprofile">Registration Update</label>
+<hr>
+<form action="{% url 'RegistrationAdminUsers_updatessave' mem1.id %}" autocomplete="off" method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <label id="form-label">Name:</label>
+                <input type="text" class="form-control text-light" name="name" autocomplete="off" value="{{mem1.fullname}}"><br>
+                <label id="form-label">Email:</label>
+                <input type="text" class="form-control text-light" name="email" autocomplete="off" value="{{mem1.email}}"><br>
+                <label id="form-label">Contact number:</label>
+                <input type="text" class="form-control text-light" name="mobile" autocomplete="off" value="{{mem1.mobile}}"><br>
+                <label id="form-label">Batch:</label>
+                <select class="form-control text-light" name="batch" required>
+                    <option value="{{mem1.batch.id}}">{{mem1.batch}}</option>
+                    {% for i in bac %}
+                    <option value="{{ i.id }}">{{i.batch}}</option><br>
+                    {% endfor %}
+
+                </select><br>
+
+                <label id="form-label">Designation:</label>
+                <select class="form-control text-light" name="class" required>
+                    <option value="{{mem1.designation.id}}">{{mem1.designation}}</option>
+                    {% for i in desig %}
+                    <option value="{{ i.id }}">{{i.designation}}</option><br>
+                    {% endfor %}
+
+                </select><br>
+                <label id="form-label">Status:</label>
+                <select class="form-control" name="status" required>
+                    <option value="">{{mem1.status}}</option>
+                    
+                    
+                    <option value="active">Active</option>
+                    <option value="resign">Resign</option>
+
+                </select><br>
+     
+                <button type="submit" style="float: right;" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("datefield").setAttribute("max", today);
+    document.getElementById("appoinment").setAttribute("max", today);
+    document.getElementById("startdate").setAttribute("max", today);
+    document.getElementById("enddate").setAttribute("max", today);
+</script>
+{% endblock %}

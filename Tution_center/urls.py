@@ -32,6 +32,11 @@ urlpatterns = [
     re_path(r'^Staff_issuereportsstudents/$', views.Staff_issuereportsstudents, name='Staff_issuereportsstudents'),
     re_path(r'^Staffreplyview/(?P<id>\d+)/$', views.Staffreplyview, name='Staffreplyview'),
     re_path(r'^Staffissuereply/(?P<id>\d+)/$', views.Staffissuereply, name='Staffissuereply'),
+    re_path(r'^RegistrationUsers_Admin/$', views.RegistrationUsers_Admin, name='RegistrationUsers_Admin'),
+    re_path(r'^RegistrationUser_Adminsave/(?P<id>\d+)/$', views.RegistrationUser_Adminsave, name='RegistrationUser_Adminsave'),
+    re_path(r'^RegistrationAdminUser_delete/(?P<id>\d+)/$', views.RegistrationAdminUser_delete, name='RegistrationAdminUser_delete'),
+    re_path(r'^RegistrationAdminUsers_update/(?P<id>\d+)/$', views.RegistrationAdminUsers_update, name='RegistrationAdminUsers_update'),
+    re_path(r'^RegistrationAdminUsers_updatessave/(?P<id>\d+)/$', views.RegistrationAdminUsers_updatessave, name='RegistrationAdminUsers_updatessave'),
 
 
 #*******************************************    Subeesh     ************************************************
